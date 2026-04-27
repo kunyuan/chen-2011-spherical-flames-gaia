@@ -1,0 +1,71 @@
+{
+  "exports": [
+    {
+      "content": "An independent Cantera `FreeFlame` computation using the Li 2004 mechanism and mixture-averaged transport reproduces the paper's H2/air unstretched laminar flame speeds to within ±2 % across a wide range of equivalence ratios ($\\phi \\in \\{1.0, 2.0, 4.0\\}$). This is the tier-1 validation gate: the mechanism, transport choice, and initial conditions are therefore consistent with the paper.",
+      "content_hash": "a5528824de482340014227cdc22d2ce321f596fc74062890d57682625e563250",
+      "label": "cantera_validates_paper_sl",
+      "qid": "github:chen_2011_spherical_flames::cantera_validates_paper_sl",
+      "type": "claim"
+    },
+    {
+      "content": "The methodological conclusions of Chen 2011 — the three stretch-extrapolation models (LM, NMI, NMII), the error ordering $|\\varepsilon_{\\text{NMI}}| < |\\varepsilon_{\\text{NMII}}| < |\\varepsilon_{\\text{LM}}|$ for $\\mathrm{Le} \\neq 1$, zero error at $\\mathrm{Le} = 1$, the NQ fitting-window requirement $R_f > 1.5$ cm for $\\mathrm{Le} > 1$, and the residual-based error definition of Eq. 6 — are reproducible in 2026 with independent open tooling (Cantera FreeFlame + pyASURF / Fortran ASURF on Bohrium), given the pipeline lessons documented in this package.",
+      "content_hash": "9818a82485aa66902115d34f390a404ea5e9655ca20e7f7e6ce868e506fb2064",
+      "label": "chen2011_reproducible",
+      "qid": "github:chen_2011_spherical_flames::chen2011_reproducible",
+      "type": "claim"
+    },
+    {
+      "content": "The paper defines each model's extraction error as the equation residual of the model evaluated at the exact SM solution (Eq. 6 of [@Chen2011]): LM residual: $U - 1 + L^{0}\\,(2U/R)$; NMI residual: $U - 1 + L^{0}\\,(2/R)$; NMII residual: $\\ln(U) + L^{0}\\,(2/(R\\,U))$. This is a *residual* definition, not the naive relative error $(U_{\\text{model}} - U_{\\text{DM}})/U_{\\text{DM}}$.",
+      "content_hash": "af2a988cf303137b4fbd9cd31bb393a72a39c5096eefcf55dcb68f3c98dca92b",
+      "label": "error_def_residual_eq6",
+      "qid": "github:chen_2011_spherical_flames::error_def_residual_eq6",
+      "type": "claim"
+    },
+    {
+      "content": "For $\\mathrm{Le} \\neq 1$, the magnitudes of the residual-based extraction errors of the three models obey $|\\varepsilon_{\\mathrm{NMI}}| \\,<\\, |\\varepsilon_{\\mathrm{NMII}}| \\,<\\, |\\varepsilon_{\\mathrm{LM}}|$: the linear model has the largest error, NMI the smallest. In the paper this ordering is shown in Figs. 3, 4 and 7.",
+      "content_hash": "31bd0f65cba44c0eec5fd6598ee4e9ae6a464c30c6b63e669241012d0aefc74a",
+      "label": "error_ordering_le_ne_1",
+      "qid": "github:chen_2011_spherical_flames::error_ordering_le_ne_1",
+      "type": "claim"
+    },
+    {
+      "content": "At Lewis number $\\mathrm{Le} = 1$, the flame-speed response has no stretch dependence ($L_b \\to 0$), so LM, NMI and NMII all give the exact unstretched flame speed — the extraction error is zero for all three models.",
+      "content_hash": "5a5250a109fcbe56c4ba5ebcc67017dcfbdf609c970695dfa4f73e1fd4031a6a",
+      "label": "error_zero_at_le1",
+      "qid": "github:chen_2011_spherical_flames::error_zero_at_le1",
+      "type": "claim"
+    },
+    {
+      "content": "Paper Section 3.2 requires that the NQ (nonlinear, NMI-based) extraction be fitted only to the portion of the $R_f(t)$ trajectory with $R_f > 1.5$ cm. For rich flames with $\\mathrm{Le} > 1$ (e.g. $\\phi = 4.0$ H2/air), fitting windows that include smaller radii produce unphysical negative Markstein length from NMI.",
+      "content_hash": "208816b5e4089014a58b29f7990be694a86ae6bc2a600128186990449a845298",
+      "label": "nq_window_requirement",
+      "qid": "github:chen_2011_spherical_flames::nq_window_requirement",
+      "type": "claim"
+    },
+    {
+      "content": "Overall reproduction outcome: 13 of the paper's 14 figures are reproducible (Figs. 2-14), with Fig. 1 skipped as a non-reproducible literature-survey schematic. Of the 13, eleven were ACCEPTed on the first QG pass, Fig. 4 was ACCEPTed after the Eq. 6 residual-error fix, and Fig. 9 was ACCEPTed under the relaxed ±20 % policy.",
+      "content_hash": "aed5b6e44f8459117108bd733c536bd3f63efb5bf63e60a94cb3f3980c1d15b0",
+      "label": "reproduction_13_of_14",
+      "qid": "github:chen_2011_spherical_flames::reproduction_13_of_14",
+      "type": "claim"
+    },
+    {
+      "content": "The reproduction campaign establishes four pipeline-level lessons that are necessary (but not sufficient) conditions for trusting extracted $S_L^{0}$ and $L_b$ from pyASURF spherical flames: (1) $\\Delta x_{\\text{base}} < 2\\,R_{\\text{kernel}}$ for ignition, (2) AMR level ≥ 7 for $L_b$ accuracy, (3) Soret on for rich H2 (change < 2 % but still should be retained), (4) mechanism size ≤ ~15 species for tractable cost. Together these lessons amount to a reproducibility check-list for OPS simulations in this regime.",
+      "content_hash": "2e3749eeeb3e6a1350c3a856b125ccdb2c345186c9d501f09707e459c6467573",
+      "label": "reproduction_lessons",
+      "qid": "github:chen_2011_spherical_flames::reproduction_lessons",
+      "type": "claim"
+    },
+    {
+      "content": "The reproduction's independent digitisation and NMI extraction of Taylor 1991 CH4/air data at $\\phi = 1.34$ agrees with the paper's re-analysis to 0.1 %, well inside any plausible digitisation tolerance. Figures 13 and 14 (extracted $S_b^{0}$ and relative differences across the full $\\phi$ sweep) likewise match the paper's trends qualitatively and quantitatively.",
+      "content_hash": "84d1d108d6e823969f42f6c16a70106525c2468bf5bdb1234003adde98226618",
+      "label": "taylor_reanalysis_agreement",
+      "qid": "github:chen_2011_spherical_flames::taylor_reanalysis_agreement",
+      "type": "claim"
+    }
+  ],
+  "ir_hash": "sha256:0b200926fdddd92295a333c0f6014b5c4978ab12e0af297e2c5cbcaf4af9ce95",
+  "manifest_schema_version": 1,
+  "package": "chen-2011-spherical-flames",
+  "version": "0.1.0"
+}

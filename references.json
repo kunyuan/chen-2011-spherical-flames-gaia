@@ -1,0 +1,108 @@
+{
+  "Chen2011": {
+    "type": "article-journal",
+    "title": "On the extraction of laminar flame speed and Markstein length from outwardly propagating spherical flames",
+    "author": [
+      { "family": "Chen", "given": "Zheng" }
+    ],
+    "container-title": "Combustion and Flame",
+    "volume": "158",
+    "issue": "2",
+    "page": "291-300",
+    "issued": { "date-parts": [[2011]] },
+    "DOI": "10.1016/j.combustflame.2010.09.001",
+    "publisher": "Elsevier",
+    "note": "Primary paper being formalized."
+  },
+  "Taylor1991": {
+    "type": "thesis",
+    "title": "Burning velocity and the influence of flame stretch",
+    "author": [
+      { "family": "Taylor", "given": "Simon Charles" }
+    ],
+    "publisher": "University of Leeds",
+    "publisher-place": "Leeds, UK",
+    "genre": "PhD thesis",
+    "issued": { "date-parts": [[1991]] },
+    "note": "Experimental OPS dataset re-analysed in Section 5 of Chen 2011."
+  },
+  "Li2004": {
+    "type": "article-journal",
+    "title": "An updated comprehensive kinetic model of hydrogen combustion",
+    "author": [
+      { "family": "Li", "given": "Juan" },
+      { "family": "Zhao", "given": "Zhenwei" },
+      { "family": "Kazakov", "given": "Andrei" },
+      { "family": "Dryer", "given": "Frederick L." }
+    ],
+    "container-title": "International Journal of Chemical Kinetics",
+    "volume": "36",
+    "issue": "10",
+    "page": "566-575",
+    "issued": { "date-parts": [[2004]] },
+    "DOI": "10.1002/kin.20026",
+    "note": "H2/O2 mechanism used for the Cantera tier-1 validation in this package."
+  },
+  "KelleyLaw2009": {
+    "type": "article-journal",
+    "title": "Nonlinear effects in the extraction of laminar flame speeds from expanding spherical flames",
+    "author": [
+      { "family": "Kelley", "given": "A. P." },
+      { "family": "Law", "given": "C. K." }
+    ],
+    "container-title": "Combustion and Flame",
+    "volume": "156",
+    "issue": "9",
+    "page": "1844-1851",
+    "issued": { "date-parts": [[2009]] },
+    "DOI": "10.1016/j.combustflame.2009.04.004",
+    "note": "Source of the NMI nonlinear-extraction model reviewed in Chen 2011."
+  },
+  "GRI30": {
+    "type": "report",
+    "title": "GRI-Mech 3.0",
+    "author": [
+      { "family": "Smith", "given": "Gregory P." },
+      { "family": "Golden", "given": "David M." },
+      { "family": "Frenklach", "given": "Michael" },
+      { "family": "Moriarty", "given": "Nigel W." },
+      { "family": "Eiteneer", "given": "Boris" },
+      { "family": "Goldenberg", "given": "Mikhail" },
+      { "family": "Bowman", "given": "C. Thomas" },
+      { "family": "Hanson", "given": "Ronald K." },
+      { "family": "Song", "given": "Soonho" },
+      { "family": "Gardiner Jr", "given": "William C." },
+      { "family": "Lissianski", "given": "Vitali V." },
+      { "family": "Qin", "given": "Zhiwei" }
+    ],
+    "URL": "http://www.me.berkeley.edu/gri_mech/",
+    "issued": { "date-parts": [[1999]] },
+    "note": "CH4/air mechanism used (as GRI30_noNOx, 36-species reduction) for pyASURF CH4/air reproductions."
+  },
+  "Cantera": {
+    "type": "software",
+    "title": "Cantera: An Object-oriented Software Toolkit for Chemical Kinetics, Thermodynamics, and Transport Processes",
+    "author": [
+      { "family": "Goodwin", "given": "David G." },
+      { "family": "Moffat", "given": "Harry K." },
+      { "family": "Schoegl", "given": "Ingmar" },
+      { "family": "Speth", "given": "Raymond L." },
+      { "family": "Weber", "given": "Bryan W." }
+    ],
+    "version": "3.0",
+    "URL": "https://www.cantera.org",
+    "note": "Used for the 1-D flat-flame FreeFlame tier-1 validation computations."
+  },
+  "pyASURF": {
+    "type": "software",
+    "title": "pyASURF — Python rewrite of the ASURF spherical-flame AMR solver",
+    "note": "Internal reproduction tooling on the Bohrium platform, used for 1-D spherical AMR simulations with a specified chemical mechanism."
+  },
+  "ChenTrace2026": {
+    "type": "document",
+    "title": "Reproduction trace of Chen 2011 CNF 158 on the Playground (chen-2011-cnf-158)",
+    "issued": { "date-parts": [[2026, 4, 9]] },
+    "URL": "http://audp1430906.bohrium.tech:50002/#trace/chen-2011-cnf-158",
+    "note": "Independent reproduction trace formalized by this package; includes ~96 trace steps, a QG audit, and figure-by-figure verdicts."
+  }
+}

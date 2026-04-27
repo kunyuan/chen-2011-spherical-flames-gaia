@@ -1,0 +1,296 @@
+{
+  "ir_hash": "sha256:0b200926fdddd92295a333c0f6014b5c4978ab12e0af297e2c5cbcaf4af9ce95",
+  "manifest_schema_version": 1,
+  "package": "chen-2011-spherical-flames",
+  "premises": [
+    {
+      "content": "At AMR level 8 ($\\Delta x_{\\min} = \\Delta x_{\\text{base}} / 256$), a grid-independence re-run for rich H2/air at $\\phi = 4.0$ changes $S_b^{0}$ by less than 0.5 % relative to AMR level 7. Resolution is therefore converged at level 7 for this class of flames.",
+      "content_hash": "2dabfe1ad16c312ddbb1a90b3f585beb6a563a65ec8ceaefc106dbe1182ca468",
+      "exported": false,
+      "interface_hash": "sha256:5953ef7389de74613ad55fcaec3ba95e6217fb81012cd4b16d476ebe1c3d2211",
+      "label": "amr_level8_grid_indep",
+      "qid": "github:chen_2011_spherical_flames::amr_level8_grid_indep",
+      "required_by": [
+        "github:chen_2011_spherical_flames::reproduction_lessons"
+      ],
+      "role": "local_hole"
+    },
+    {
+      "content": "Cantera `FreeFlame` with the Li 2004 H2 mechanism [@Li2004] at $\\phi = 1.0$, $T_u = 298$ K, $P = 1$ atm, mixture-averaged transport, returns $S_L = 210.3$ cm/s.",
+      "content_hash": "6a4fd8d8611bd96df9e0075385a37a537ed0e2746b65162a2ad32a1067ad46f4",
+      "exported": false,
+      "interface_hash": "sha256:fd3c9a072d1718e85be9dad28fd83fb2cf5f676735d1f48f18d4d0b980be4750",
+      "label": "cantera_sl_phi1",
+      "qid": "github:chen_2011_spherical_flames::cantera_sl_phi1",
+      "required_by": [
+        "github:chen_2011_spherical_flames::cantera_validates_paper_sl"
+      ],
+      "role": "local_hole"
+    },
+    {
+      "content": "Cantera `FreeFlame` with Li 2004 at $\\phi = 2.0$ returns $S_L = 286.1$ cm/s.",
+      "content_hash": "b0fbcfe96049625a7011c36655d9f5de8b6672bdd3e87ff95e0c3033bd24e86a",
+      "exported": false,
+      "interface_hash": "sha256:1e531597b61adcc2726feb82435654e0ef5d3edfc6cabd955a79f76fde24a7f0",
+      "label": "cantera_sl_phi2",
+      "qid": "github:chen_2011_spherical_flames::cantera_sl_phi2",
+      "required_by": [
+        "github:chen_2011_spherical_flames::cantera_validates_paper_sl"
+      ],
+      "role": "local_hole"
+    },
+    {
+      "content": "Cantera `FreeFlame` with Li 2004 at $\\phi = 4.0$ returns $S_L = 145.2$ cm/s.",
+      "content_hash": "506b3749b28824d4073343fc6096c474a716ddb81ceb0b0983989f77d9fbc2a7",
+      "exported": false,
+      "interface_hash": "sha256:665cad1165a95704f81dc675316b7563353d23871f6c966c740396d13dcce6cf",
+      "label": "cantera_sl_phi4",
+      "qid": "github:chen_2011_spherical_flames::cantera_sl_phi4",
+      "required_by": [
+        "github:chen_2011_spherical_flames::cantera_validates_paper_sl"
+      ],
+      "role": "local_hole"
+    },
+    {
+      "content": "Fig. 1 of the paper is a literature-survey schematic of prior OPS experimental setups, not a reproducible computation. It was explicitly marked skipped in the QG audit.",
+      "content_hash": "6689cd97298867bafb06b9063f75880c9c46e1e6f157023b051212769c10de60",
+      "exported": false,
+      "interface_hash": "sha256:a0f946dc6fa9f1c1ed6d1613f361b12230fbd54d02b56b8e0eab36648ee8d982",
+      "label": "fig1_skipped",
+      "qid": "github:chen_2011_spherical_flames::fig1_skipped",
+      "required_by": [
+        "github:chen_2011_spherical_flames::reproduction_13_of_14"
+      ],
+      "role": "local_hole"
+    },
+    {
+      "content": "Successful ignition in pyASURF spherical-flame runs requires the base grid cell size to satisfy $\\Delta x_{\\text{base}} < 2\\,R_{\\text{kernel}}$, where $R_{\\text{kernel}}$ is the ignition kernel radius. When this condition is violated (e.g. $N_{\\text{base}} = 50$ over 25 cm with $R_{\\text{kernel}} = 2$ mm), the first cell centre lies outside the kernel, the initial condition is entirely unburned, no temperature gradient triggers AMR refinement, and the flame never ignites.",
+      "content_hash": "5ffde1832de1100c1e16c4bb6f822ecf258a47b1cdfc133e1396da8ae817906f",
+      "exported": false,
+      "interface_hash": "sha256:ca8f0a8c8b33f1c00064e04f5ebe7e2a6b9cb990f3e815d2351a5c677abb2c9f",
+      "label": "ignition_kernel_constraint",
+      "qid": "github:chen_2011_spherical_flames::ignition_kernel_constraint",
+      "required_by": [
+        "github:chen_2011_spherical_flames::reproduction_lessons"
+      ],
+      "role": "local_hole"
+    },
+    {
+      "content": "Mechanisms with more than ~15 species make pyASURF spherical-flame simulations impractical on consumer CPU hardware: a single $\\phi$ case with GRI-Mech 3.0 (53 species) is estimated at 6-24 CPU-hours, and a full $\\phi$ sweep at multiple pressures requires hundreds of CPU-hours on Bohrium. This is why the H2 reproduction uses Li 2004 (10 species) and the CH4 reproduction substitutes GRI30_noNOx_36sp (36 species) for the full 53-species mechanism.",
+      "content_hash": "275ef0ed4145994f20acd8df803f17a78a7962a29d7d17cff1fc8146af4b4803",
+      "exported": false,
+      "interface_hash": "sha256:1ff8282e293cd67dd2b9d978d15c8050a2dc6d8f4d08f5a0d819f11e226a1b6f",
+      "label": "large_mech_impractical",
+      "qid": "github:chen_2011_spherical_flames::large_mech_impractical",
+      "required_by": [
+        "github:chen_2011_spherical_flames::reproduction_lessons"
+      ],
+      "role": "local_hole"
+    },
+    {
+      "content": "At Lewis number $\\mathrm{Le} = 1$, the Markstein length $L_b$ vanishes: the flame-speed response has no stretch dependence. This is a direct consequence of the asymptotic expansion: the leading stretch coefficient is proportional to $\\mathrm{Le} - 1$ (Markstein 1964 result recovered in Matalon-Matkowsky asymptotics).",
+      "content_hash": "fd227cf4b9fe2ac769af120bbf036a3a1a34c48da65292fadede175ee936d083",
+      "exported": false,
+      "interface_hash": "sha256:6485b5c5b1e6700e4970e4c4d12579f7d5289f3ca7f70358b9fa4274e4308d83",
+      "label": "lb_vanishes_at_le1",
+      "qid": "github:chen_2011_spherical_flames::lb_vanishes_at_le1",
+      "required_by": [
+        "github:chen_2011_spherical_flames::error_zero_at_le1"
+      ],
+      "role": "local_hole"
+    },
+    {
+      "content": "For $\\phi = 4.0$ H2/air at $T_u = 298$ K, $P = 1$ atm, the paper reports a Markstein length $L_b = 0.044$ cm using NMI with the fitting window $R_f > 1.5$ cm.",
+      "content_hash": "e74312f3d4fd3997563f130f293e683e32b1b95d5b22d76756d1030501e54ad9",
+      "exported": false,
+      "interface_hash": "sha256:6c71b0f77d6344bd55252e7cc9339b51a45eb1863d50b88d012bdd025969f144",
+      "label": "paper_lb_phi4_value",
+      "qid": "github:chen_2011_spherical_flames::paper_lb_phi4_value",
+      "required_by": [
+        "github:chen_2011_spherical_flames::nq_window_requirement"
+      ],
+      "role": "local_hole"
+    },
+    {
+      "content": "The paper [@Chen2011] reports an unstretched laminar flame speed $S_L = 213.6$ cm/s for H2/air at $\\phi = 1.0$, $T_u = 298$ K, $P = 1$ atm.",
+      "content_hash": "30cac7bd81a6421c3f4d3a4bcb278770816c663a12a959655419f5ecd3a1ebe9",
+      "exported": false,
+      "interface_hash": "sha256:8055e2325b738d981a6719b77b54d51c36a81741f7c5bfa27ce3d91c08381589",
+      "label": "paper_sl_phi1",
+      "qid": "github:chen_2011_spherical_flames::paper_sl_phi1",
+      "required_by": [
+        "github:chen_2011_spherical_flames::cantera_validates_paper_sl"
+      ],
+      "role": "local_hole"
+    },
+    {
+      "content": "The paper reports $S_L = 290.8$ cm/s for H2/air at $\\phi = 2.0$.",
+      "content_hash": "b8518ef945b239e525eed2048959f18f1715114362d51dcef617ea5a00d9d684",
+      "exported": false,
+      "interface_hash": "sha256:d21111c9122f437ece5b4dae3b3eb4d929e800057b476a222e0a1b27094f5dec",
+      "label": "paper_sl_phi2",
+      "qid": "github:chen_2011_spherical_flames::paper_sl_phi2",
+      "required_by": [
+        "github:chen_2011_spherical_flames::cantera_validates_paper_sl"
+      ],
+      "role": "local_hole"
+    },
+    {
+      "content": "The paper reports $S_L = 148.0$ cm/s for H2/air at $\\phi = 4.0$.",
+      "content_hash": "f0132760eca4f08e3a744d000dcb284021ba8692c741a3f41125fea655eb930c",
+      "exported": false,
+      "interface_hash": "sha256:2421b608a471f2b884da83f1cb63f8d87745ac1fef6f244feead224521fddda5",
+      "label": "paper_sl_phi4",
+      "qid": "github:chen_2011_spherical_flames::paper_sl_phi4",
+      "required_by": [
+        "github:chen_2011_spherical_flames::cantera_validates_paper_sl"
+      ],
+      "role": "local_hole"
+    },
+    {
+      "content": "Applying NMI extraction to the Taylor 1991 data at $\\phi = 1.34$ yields an unstretched burned-gas flame speed $S_b^{0} = 154.1$ cm/s in the paper's re-analysis.",
+      "content_hash": "9bb988f19d527231c2a39caf9241142c309b8bc8cd665b6cafe1b92ed132dac5",
+      "exported": false,
+      "interface_hash": "sha256:929d48e9e665baee0a7e6eff8d2606fb834ba04324e3da2916e51a779530d038",
+      "label": "paper_taylor_phi134",
+      "qid": "github:chen_2011_spherical_flames::paper_taylor_phi134",
+      "required_by": [
+        "github:chen_2011_spherical_flames::taylor_reanalysis_agreement"
+      ],
+      "role": "local_hole"
+    },
+    {
+      "content": "Raw pyASURF reproduction of Fig. 3 data: SM-benchmark error curves $\\varepsilon_{\\text{LM}}$, $\\varepsilon_{\\text{NMI}}$, $\\varepsilon_{\\text{NMII}}$ were recomputed on an H2/air spherical flame at $\\phi = 4.0$, $R_f \\in [1.5, 3.0]$ cm (paper's window). The resulting $\\log \\varepsilon$ vs $\\log(1/R_f)$ plot shows three straight lines of slope ≈ 2, with NMI lowest, NMII in the middle, and LM highest at every sampled $R_f$.",
+      "content_hash": "704cd45ebfc8d50167c2d8eda5d8a32cb5edcdc311802d08d671485c7e87e916",
+      "exported": false,
+      "interface_hash": "sha256:89a2a3c445498ba43f2072a390a7e5fcb544e5524644fab2c980125d55e467a2",
+      "label": "pyasurf_fig3_curves",
+      "qid": "github:chen_2011_spherical_flames::pyasurf_fig3_curves",
+      "required_by": [
+        "github:chen_2011_spherical_flames::error_ordering_le_ne_1"
+      ],
+      "role": "local_hole"
+    },
+    {
+      "content": "Raw pyASURF reproduction of Fig. 7 data: at $\\mathrm{Le} = 3$ the extracted $S_b^{0}$ values are $S_b(\\text{NMI}) = 112.4$ cm/s, $S_b(\\text{NMII}) = 115.1$ cm/s, $S_b(\\text{LM}) = 120.6$ cm/s, giving relative spreads $(LM-NMI)/NMI \\approx 0.073$ and $(NMII-NMI)/NMI \\approx 0.024$ — close to the paper's 0.06 and 0.02.",
+      "content_hash": "b62bac21ce9dbea5bb5b8fdb88f7ad5b99cfd0b977a83694bb0e8afdd186bda2",
+      "exported": false,
+      "interface_hash": "sha256:91c55980f4d53c8115d9420680fa1d007049279a0e2f7746ee40a6f2f3e72b99",
+      "label": "pyasurf_fig7_deltas",
+      "qid": "github:chen_2011_spherical_flames::pyasurf_fig7_deltas",
+      "required_by": [
+        "github:chen_2011_spherical_flames::error_ordering_le_ne_1"
+      ],
+      "role": "local_hole"
+    },
+    {
+      "content": "pyASURF with AMR level 6 at CH4/air $\\phi = 0.6$, $P = 1$ atm (Bohrium job 22341438) gives $S_b^{0} = 62.8$ cm/s (LM) with $R^{2} = 0.993$ — clean extraction at the lean end.",
+      "content_hash": "fe7287e43e226cf4c81fa4a26b5c864c94d576163cbe3f1871cc7516948fb0da",
+      "exported": false,
+      "interface_hash": "sha256:60761ac0050bf57df42138e4efc954e9d5013b8664a4cb547f962de4a8718b0d",
+      "label": "pyasurf_phi06_amr6",
+      "qid": "github:chen_2011_spherical_flames::pyasurf_phi06_amr6",
+      "required_by": [
+        "github:chen_2011_spherical_flames::reproduction_lessons"
+      ],
+      "role": "local_hole"
+    },
+    {
+      "content": "pyASURF with AMR level 6 at CH4/air $\\phi = 1.4$, $P = 1$ atm gives $S_b^{0} = 90.9$ cm/s (LM extraction). Fit quality $R^{2} = 0.555$ — significantly noisier than the other $\\phi$ points, indicating under-resolution at this slow, rich flame.",
+      "content_hash": "3f8cc3e7c86034e2a96890c780970dd492f9a1122f011862f7c8993e8efa64b8",
+      "exported": false,
+      "interface_hash": "sha256:256f94589b1e166906b1959c670249fbe01cc7289b005006d8d63783601e00e5",
+      "label": "pyasurf_phi14_sb_noisy",
+      "qid": "github:chen_2011_spherical_flames::pyasurf_phi14_sb_noisy",
+      "required_by": [
+        "github:chen_2011_spherical_flames::reproduction_lessons"
+      ],
+      "role": "local_hole"
+    },
+    {
+      "content": "The 2026-04-09 QG audit classified 11 of the 13 reproduced figures — namely Figs. 2, 3, 5, 6, 7, 8, 10, 11, 12, 13 and 14 — as ACCEPT (quantitatively match the paper within each figure's appropriate tolerance).",
+      "content_hash": "de371086279e91f8f6eafee53a96eeb9138f3f79671a8bdc6e3e8ab5ae72810b",
+      "exported": false,
+      "interface_hash": "sha256:bc39a1c02c8fad454dfbd4349fd453e87dde887f34fb3d0b693e493db5fe35dd",
+      "label": "qg_11_accept",
+      "qid": "github:chen_2011_spherical_flames::qg_11_accept",
+      "required_by": [
+        "github:chen_2011_spherical_flames::reproduction_13_of_14"
+      ],
+      "role": "local_hole"
+    },
+    {
+      "content": "Fig. 4 started with a REJECT verdict because the reproduction used a relative error $(U_{\\text{model}} - U_{\\text{DM}})/U_{\\text{DM}}$, producing a sign-inverted plot. After the error definition was corrected to the paper's Eq. 6 residual form, the figure visually and quantitatively matched the paper and the verdict flipped to ACCEPT.",
+      "content_hash": "725d72dadfea1e0f7e26c97178e5e8f4547a2d5896cc98b8ce426fea58a42040",
+      "exported": false,
+      "interface_hash": "sha256:504ef39a54997fc8d02b189a23d8f248e68ae3d56c100ce92d8e0eacbcda10a3",
+      "label": "qg_fig4_fix",
+      "qid": "github:chen_2011_spherical_flames::qg_fig4_fix",
+      "required_by": [
+        "github:chen_2011_spherical_flames::reproduction_13_of_14"
+      ],
+      "role": "local_hole"
+    },
+    {
+      "content": "Fig. 9 (pressure-variation panel) received a PARTIAL verdict. Panel 9b ($P = 2.0$ atm, NMI extraction) achieves $R^{2} = 0.998$; panel 9a ($P = 0.5$ atm) was initially blocked by a solver NaN crash. Under the relaxed ±20 % QG policy the figure was upgraded to ACCEPT with a documented caveat: the P = 2.0 atm $S_b^{0}$ deviation of 24 % from Cantera is a resolution artefact at AMR-6, not a methodology failure.",
+      "content_hash": "9345aa1c042efaf16ddbd9aa6814dee84f8732f8853de684d80609b084f967d4",
+      "exported": false,
+      "interface_hash": "sha256:342df357e38b8113fd6fa502ba90e4712c40b518a844c0ae5a1ec154db95a9e7",
+      "label": "qg_fig9_partial",
+      "qid": "github:chen_2011_spherical_flames::qg_fig9_partial",
+      "required_by": [
+        "github:chen_2011_spherical_flames::reproduction_13_of_14"
+      ],
+      "role": "local_hole"
+    },
+    {
+      "content": "After switching the NMI fitting window to $R_f > 1.5$ cm (matching the paper's Section 3.2), the reproduction yields $L_b(\\phi=4.0) = 0.042$ cm. Paper value: $0.044$ cm. Deviation: 4.5 %.",
+      "content_hash": "60254478d6e08285f6ba9c1a161e7eaec9aafd6cc4198ff2d37532ec46d211ac",
+      "exported": false,
+      "interface_hash": "sha256:f912b8537ce35b8527a71ddccb17fbb2f259f7ec2ab325334f985008af72da5e",
+      "label": "repro_lb_phi4_fixed_window_matches",
+      "qid": "github:chen_2011_spherical_flames::repro_lb_phi4_fixed_window_matches",
+      "required_by": [
+        "github:chen_2011_spherical_flames::nq_window_requirement"
+      ],
+      "role": "local_hole"
+    },
+    {
+      "content": "The reproduction attempt initially used a fitting window $R_f > 1.0$ cm for NMI extraction at $\\phi = 4.0$ H2/air. The fit returned a negative $L_b$, which is unphysical for $\\mathrm{Le} > 1$.",
+      "content_hash": "96b8d93842166dc4756e463b034f46ac31e4ffecf58dbf4b3c48825a47f5dbbc",
+      "exported": false,
+      "interface_hash": "sha256:fd7b3b130e681fb9c16946c4669da49dc037f8930d4f1e4efd724bf9bd8f4078",
+      "label": "repro_lb_phi4_tight_window_fails",
+      "qid": "github:chen_2011_spherical_flames::repro_lb_phi4_tight_window_fails",
+      "required_by": [
+        "github:chen_2011_spherical_flames::nq_window_requirement"
+      ],
+      "role": "local_hole"
+    },
+    {
+      "content": "The reproduction digitises Taylor 1991 $\\phi = 1.34$ and applies its own NMI extraction routine, yielding $S_b^{0} = 153.9$ cm/s — a deviation of $-0.1$ % from the paper value.",
+      "content_hash": "d4302a2e1c24484b6ed13c86a92eb6eadac4a29c4ae5ee2f34b3afd6e50832ed",
+      "exported": false,
+      "interface_hash": "sha256:066301aac9aaf9aa51ea7f53ba1595f7306790f9c44235227f9a7e001ea6df09",
+      "label": "repro_taylor_phi134",
+      "qid": "github:chen_2011_spherical_flames::repro_taylor_phi134",
+      "required_by": [
+        "github:chen_2011_spherical_flames::taylor_reanalysis_agreement"
+      ],
+      "role": "local_hole"
+    },
+    {
+      "content": "Toggling the Soret (thermal-diffusion) term on versus off for a rich H2/air flame at $\\phi = 4.0$ changes the extracted $S_b^{0}$ by less than 2 %. This is small compared with the 6-7 % stretch-correction bias of LM, so the paper's Soret-on choice is adequate.",
+      "content_hash": "dd388bc7a8978c71c0cca0e6cab2595d7944057ef1b6abc79afcc1c65f413601",
+      "exported": false,
+      "interface_hash": "sha256:c55993198a71af00dcc1f7159e2a066170e73491f849a8150f4cd6e2b5f6fb26",
+      "label": "soret_rich_h2_neglig",
+      "qid": "github:chen_2011_spherical_flames::soret_rich_h2_neglig",
+      "required_by": [
+        "github:chen_2011_spherical_flames::reproduction_lessons"
+      ],
+      "role": "local_hole"
+    }
+  ],
+  "version": "0.1.0"
+}

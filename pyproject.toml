@@ -1,0 +1,23 @@
+[project]
+name = "chen-2011-spherical-flames-gaia"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "kunchen", email = "chenkun0228@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "gaia-lang>=0.4.3",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/chen_2011_spherical_flames"]
+
+[tool.gaia]
+type = "knowledge-package"
+uuid = "855736ab-447f-47a4-8abf-6db8f14a7cb4"

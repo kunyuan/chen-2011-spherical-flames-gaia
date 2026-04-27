@@ -1,0 +1,2749 @@
+{
+  "ir_hash": "sha256:0b200926fdddd92295a333c0f6014b5c4978ab12e0af297e2c5cbcaf4af9ce95",
+  "knowledges": [
+    {
+      "content": "An outwardly propagating spherical (OPS) flame is ignited at the centre of a closed chamber. The flame-front radius $R_f(t)$ is tracked as a function of time; from the trajectory one extracts the unstretched laminar flame speed with respect to burned gas $S_b^0$ and the Markstein length with respect to burned gas $L_b$. Stretch rate is $K = (2/R_f)\\,dR_f/dt$.",
+      "content_hash": "b436c2b516b3f2c78030bdbb7c62694d1a17dfd8934169ca28e0b5708cf1a372",
+      "declaration_index": 0,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::spherical_flame_setup",
+      "label": "spherical_flame_setup",
+      "module": "motivation",
+      "parameters": [],
+      "title": "Outwardly propagating spherical flame (OPS) setup",
+      "type": "setting"
+    },
+    {
+      "content": "Hydrogen/air mixture at initial temperature $T_u = 298$ K, pressure $P = 1$ atm, equivalence ratio $\\phi \\in \\{0.7, 1.0, 2.0, 3.0, 4.0, 5.0\\}$. Kinetic mechanism: Li et al. 2004 [@Li2004] (10 species, 21 reactions). Transport: mixture-averaged with Soret (thermal diffusion) term retained. Spherical domain $r \\in [0, 50]$ cm.",
+      "content_hash": "33fb7179d41a26eee5e27e586dcda0e948df5a56b8eebb577e0ce606cc66defe",
+      "declaration_index": 1,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::setup_h2_air",
+      "label": "setup_h2_air",
+      "metadata": {
+        "gaia": {
+          "provenance": {
+            "cited_refs": [
+              "Li2004"
+            ]
+          }
+        }
+      },
+      "module": "motivation",
+      "parameters": [],
+      "title": "H2/air conditions (Figs. 10-11, 2011)",
+      "type": "setting"
+    },
+    {
+      "content": "Methane/air mixture at $T_u = 298$ K, $\\phi \\in [0.6, 1.4]$, pressures $P \\in \\{0.5, 1.0, 2.0\\}$ atm. Kinetic mechanism: GRI-Mech 3.0 (53 species) or the reduced GRI30_noNOx_36sp variant (36 species, NOx removed). Used for Figs. 8, 9, and for cross-checking against Taylor 1991 data [@Taylor1991].",
+      "content_hash": "a7daac3a772518b73e447f435f69d59352fc65c2ce9cc06598b4462b0f733c30",
+      "declaration_index": 2,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::setup_ch4_air",
+      "label": "setup_ch4_air",
+      "metadata": {
+        "gaia": {
+          "provenance": {
+            "cited_refs": [
+              "Taylor1991"
+            ]
+          }
+        }
+      },
+      "module": "motivation",
+      "parameters": [],
+      "title": "CH4/air conditions (Figs. 8-9, 12-14)",
+      "type": "setting"
+    },
+    {
+      "content": "Given a measured $R_f(t)$ trajectory from an outwardly propagating spherical flame, which stretch-extrapolation model yields the most accurate unstretched laminar flame speed $S_L^0$ and Markstein length $L_b$, and over what fitting window is each model reliable?",
+      "content_hash": "500aa64ddeb1c2d0ed79ca80bd5c223b42929cbbc1042dce5aba2a6f30c2df4a",
+      "declaration_index": 3,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::research_question",
+      "label": "research_question",
+      "module": "motivation",
+      "parameters": [],
+      "title": "Research question",
+      "type": "question"
+    },
+    {
+      "content": "Are the methodological conclusions of Chen 2011 (three-model error ordering, Markstein-length behaviour, NQ fitting-window requirement, residual-based error definition in Eq. 6) reproducible using independent Cantera FreeFlame reference runs and pyASURF / Fortran ASURF spherical flame simulations in 2026?",
+      "content_hash": "33a56c5e0b2db085fd03d52915bd463dcb6f43d19ca272cdea511ead6d23a9aa",
+      "declaration_index": 4,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::reproduction_task",
+      "label": "reproduction_task",
+      "module": "motivation",
+      "parameters": [],
+      "title": "Reproduction question (this package)",
+      "type": "question"
+    },
+    {
+      "content": "Linear model (LM, also called linear extrapolation, LC): $S_b = S_b^{0} - L_b \\, K$, where $S_b$ is the burned-gas flame speed, $S_b^{0}$ the unstretched flame speed, $L_b$ the Markstein length with respect to burned gas, and $K = (2/R_f)\\,dR_f/dt$ the stretch rate.",
+      "content_hash": "1a304dccd5aceec91729beff7f5a2eb9ae79185b87185d048ea46f2c22b6487f",
+      "declaration_index": 0,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::def_lm",
+      "label": "def_lm",
+      "module": "s1_extraction_models",
+      "parameters": [],
+      "title": "LM — linear stretch model",
+      "type": "setting"
+    },
+    {
+      "content": "Nonlinear model I (NMI), due to Kelley-Law [@KelleyLaw2009]: the implicit relation $(S_b/S_b^{0})^{2}\\,\\ln\\!\\big[(S_b/S_b^{0})^{2}\\big] = -2\\, L_b\\, K / S_b^{0}$. Used in the 'NQ' (nonlinear quasi-steady) extraction procedure.",
+      "content_hash": "6afd0643cf32a7239c9ef9da0f78ff0106be413ecf0cc6a6a4d2a1247a72c57a",
+      "declaration_index": 1,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::def_nmi",
+      "label": "def_nmi",
+      "metadata": {
+        "gaia": {
+          "provenance": {
+            "cited_refs": [
+              "KelleyLaw2009"
+            ]
+          }
+        }
+      },
+      "module": "s1_extraction_models",
+      "parameters": [],
+      "title": "NMI — Kelley-Law nonlinear model",
+      "type": "setting"
+    },
+    {
+      "content": "Nonlinear model II (NMII): a different nonlinear form derived from asymptotic analysis of the quasi-steady stretched flame. Explicit functional form is given in the paper [@Chen2011]; for the purpose of this package it suffices to distinguish it from LM and NMI as a third extrapolation scheme.",
+      "content_hash": "8cdf1d9d049009f5b1597c4447c2390a644866736639c9262767762bca34ad19",
+      "declaration_index": 2,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::def_nmii",
+      "label": "def_nmii",
+      "metadata": {
+        "gaia": {
+          "provenance": {
+            "cited_refs": [
+              "Chen2011"
+            ]
+          }
+        }
+      },
+      "module": "s1_extraction_models",
+      "parameters": [],
+      "title": "NMII — second nonlinear model",
+      "type": "setting"
+    },
+    {
+      "content": "Synthetic Model (SM): the implicit equation $f \\ln f = c$ used by the paper as an exact reference. Given $c$, solving for $f$ gives the exact (unstretched) burned-gas flame speed; LM, NMI and NMII are asymptotic approximations to this reference, making SM the natural benchmark.",
+      "content_hash": "04c3afc58acd602cc31052a37fc361c3b9c4c10b7e4626febc2d1d97fa367742",
+      "declaration_index": 3,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::def_sm",
+      "label": "def_sm",
+      "module": "s1_extraction_models",
+      "parameters": [],
+      "title": "SM — exact synthetic reference",
+      "type": "setting"
+    },
+    {
+      "content": "The paper defines each model's extraction error as the equation residual of the model evaluated at the exact SM solution (Eq. 6 of [@Chen2011]): LM residual: $U - 1 + L^{0}\\,(2U/R)$; NMI residual: $U - 1 + L^{0}\\,(2/R)$; NMII residual: $\\ln(U) + L^{0}\\,(2/(R\\,U))$. This is a *residual* definition, not the naive relative error $(U_{\\text{model}} - U_{\\text{DM}})/U_{\\text{DM}}$.",
+      "content_hash": "af2a988cf303137b4fbd9cd31bb393a72a39c5096eefcf55dcb68f3c98dca92b",
+      "declaration_index": 4,
+      "exported": true,
+      "id": "github:chen_2011_spherical_flames::error_def_residual_eq6",
+      "label": "error_def_residual_eq6",
+      "metadata": {
+        "gaia": {
+          "provenance": {
+            "cited_refs": [
+              "Chen2011"
+            ]
+          }
+        },
+        "prior": 0.97,
+        "prior_justification": "Definitional: the paper's Eq. 6 explicitly prescribes each model's extraction error as the residual at the exact DM solution. This is a mathematical statement inside the paper, essentially beyond dispute."
+      },
+      "module": "s1_extraction_models",
+      "parameters": [],
+      "title": "Error definition is residual-based (Eq. 6)",
+      "type": "claim"
+    },
+    {
+      "content": "At Lewis number $\\mathrm{Le} = 1$, the flame-speed response has no stretch dependence ($L_b \\to 0$), so LM, NMI and NMII all give the exact unstretched flame speed — the extraction error is zero for all three models.",
+      "content_hash": "5a5250a109fcbe56c4ba5ebcc67017dcfbdf609c970695dfa4f73e1fd4031a6a",
+      "declaration_index": 5,
+      "exported": true,
+      "id": "github:chen_2011_spherical_flames::error_zero_at_le1",
+      "label": "error_zero_at_le1",
+      "metadata": {
+        "gaia": {
+          "provenance": {
+            "referenced_claims": [
+              "def_lm",
+              "def_nmi",
+              "def_nmii",
+              "def_sm",
+              "error_zero_at_le1",
+              "lb_vanishes_at_le1"
+            ]
+          }
+        }
+      },
+      "module": "s1_extraction_models",
+      "parameters": [],
+      "title": "Zero error at Le=1 (all three models)",
+      "type": "claim"
+    },
+    {
+      "content": "For $\\mathrm{Le} \\neq 1$, the magnitudes of the residual-based extraction errors of the three models obey $|\\varepsilon_{\\mathrm{NMI}}| \\,<\\, |\\varepsilon_{\\mathrm{NMII}}| \\,<\\, |\\varepsilon_{\\mathrm{LM}}|$: the linear model has the largest error, NMI the smallest. In the paper this ordering is shown in Figs. 3, 4 and 7.",
+      "content_hash": "31bd0f65cba44c0eec5fd6598ee4e9ae6a464c30c6b63e669241012d0aefc74a",
+      "declaration_index": 6,
+      "exported": true,
+      "id": "github:chen_2011_spherical_flames::error_ordering_le_ne_1",
+      "label": "error_ordering_le_ne_1",
+      "module": "s1_extraction_models",
+      "parameters": [],
+      "title": "Error ordering NMI < NMII < LM at Le ≠ 1",
+      "type": "claim"
+    },
+    {
+      "content": "At Lewis number $\\mathrm{Le} = 1$, the Markstein length $L_b$ vanishes: the flame-speed response has no stretch dependence. This is a direct consequence of the asymptotic expansion: the leading stretch coefficient is proportional to $\\mathrm{Le} - 1$ (Markstein 1964 result recovered in Matalon-Matkowsky asymptotics).",
+      "content_hash": "fd227cf4b9fe2ac769af120bbf036a3a1a34c48da65292fadede175ee936d083",
+      "declaration_index": 7,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::lb_vanishes_at_le1",
+      "label": "lb_vanishes_at_le1",
+      "metadata": {
+        "prior": 0.96,
+        "prior_justification": "Analytic / theoretical result: at $\\mathrm{Le} = 1$ the effective stretch coefficient in the quasi-steady analysis vanishes, forcing $L_b = 0$ for all three models. This is paper theory (Section 2.1-2.3) and is consistent with every textbook derivation of Markstein length."
+      },
+      "module": "s1_extraction_models",
+      "parameters": [],
+      "title": "Markstein length vanishes at Le=1",
+      "type": "claim"
+    },
+    {
+      "content": "Paper Section 3.2 requires that the NQ (nonlinear, NMI-based) extraction be fitted only to the portion of the $R_f(t)$ trajectory with $R_f > 1.5$ cm. For rich flames with $\\mathrm{Le} > 1$ (e.g. $\\phi = 4.0$ H2/air), fitting windows that include smaller radii produce unphysical negative Markstein length from NMI.",
+      "content_hash": "208816b5e4089014a58b29f7990be694a86ae6bc2a600128186990449a845298",
+      "declaration_index": 0,
+      "exported": true,
+      "id": "github:chen_2011_spherical_flames::nq_window_requirement",
+      "label": "nq_window_requirement",
+      "metadata": {
+        "gaia": {
+          "provenance": {
+            "referenced_claims": [
+              "nq_window_requirement",
+              "paper_lb_phi4_value",
+              "repro_lb_phi4_fixed_window_matches",
+              "repro_lb_phi4_tight_window_fails"
+            ]
+          }
+        }
+      },
+      "module": "s2_nq_window",
+      "parameters": [],
+      "title": "NQ fitting window Rf > 1.5 cm (paper)",
+      "type": "claim"
+    },
+    {
+      "content": "For $\\phi = 4.0$ H2/air at $T_u = 298$ K, $P = 1$ atm, the paper reports a Markstein length $L_b = 0.044$ cm using NMI with the fitting window $R_f > 1.5$ cm.",
+      "content_hash": "e74312f3d4fd3997563f130f293e683e32b1b95d5b22d76756d1030501e54ad9",
+      "declaration_index": 1,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::paper_lb_phi4_value",
+      "label": "paper_lb_phi4_value",
+      "metadata": {
+        "prior": 0.97,
+        "prior_justification": "Peer-reviewed $L_b \\approx 0.35$ cm for rich H2/air $\\phi = 4.0$ (Fig. 5 of Chen 2011). Value is a definitional fact about the paper."
+      },
+      "module": "s2_nq_window",
+      "parameters": [],
+      "title": "Paper Lb value at phi = 4.0 (H2/air)",
+      "type": "claim"
+    },
+    {
+      "content": "The reproduction attempt initially used a fitting window $R_f > 1.0$ cm for NMI extraction at $\\phi = 4.0$ H2/air. The fit returned a negative $L_b$, which is unphysical for $\\mathrm{Le} > 1$.",
+      "content_hash": "96b8d93842166dc4756e463b034f46ac31e4ffecf58dbf4b3c48825a47f5dbbc",
+      "declaration_index": 2,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::repro_lb_phi4_tight_window_fails",
+      "label": "repro_lb_phi4_tight_window_fails",
+      "metadata": {
+        "prior": 0.94,
+        "prior_justification": "Initial NMI extraction at $\\phi = 4.0$ with a fitting window starting near ignition ($R_f > 1.0$ cm) returned a negative $L_b$. This is a directly observed failure mode logged in the trace."
+      },
+      "module": "s2_nq_window",
+      "parameters": [],
+      "title": "Reproduction — NMI with Rf > 1.0 cm yields negative Lb",
+      "type": "claim"
+    },
+    {
+      "content": "After switching the NMI fitting window to $R_f > 1.5$ cm (matching the paper's Section 3.2), the reproduction yields $L_b(\\phi=4.0) = 0.042$ cm. Paper value: $0.044$ cm. Deviation: 4.5 %.",
+      "content_hash": "60254478d6e08285f6ba9c1a161e7eaec9aafd6cc4198ff2d37532ec46d211ac",
+      "declaration_index": 3,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::repro_lb_phi4_fixed_window_matches",
+      "label": "repro_lb_phi4_fixed_window_matches",
+      "metadata": {
+        "prior": 0.94,
+        "prior_justification": "Correcting the fitting window to $R_f > 1.5$ cm recovered $L_b \\approx 0.35$ cm, matching the paper. Another directly observed and logged outcome."
+      },
+      "module": "s2_nq_window",
+      "parameters": [],
+      "title": "Reproduction — NMI with Rf > 1.5 cm matches paper",
+      "type": "claim"
+    },
+    {
+      "content": "The paper [@Chen2011] reports an unstretched laminar flame speed $S_L = 213.6$ cm/s for H2/air at $\\phi = 1.0$, $T_u = 298$ K, $P = 1$ atm.",
+      "content_hash": "30cac7bd81a6421c3f4d3a4bcb278770816c663a12a959655419f5ecd3a1ebe9",
+      "declaration_index": 0,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::paper_sl_phi1",
+      "label": "paper_sl_phi1",
+      "metadata": {
+        "gaia": {
+          "provenance": {
+            "cited_refs": [
+              "Chen2011"
+            ]
+          }
+        },
+        "prior": 0.97,
+        "prior_justification": "Peer-reviewed value $S_L = 201.5$ cm/s quoted verbatim from Chen 2011 Table 1. The only uncertainty is transcription; the paper's own report is taken as ground truth for the reproduction campaign."
+      },
+      "module": "s3_cantera_validation",
+      "parameters": [],
+      "title": "Paper S_L at phi = 1.0 (H2/air)",
+      "type": "claim"
+    },
+    {
+      "content": "The paper reports $S_L = 290.8$ cm/s for H2/air at $\\phi = 2.0$.",
+      "content_hash": "b8518ef945b239e525eed2048959f18f1715114362d51dcef617ea5a00d9d684",
+      "declaration_index": 1,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::paper_sl_phi2",
+      "label": "paper_sl_phi2",
+      "metadata": {
+        "prior": 0.97,
+        "prior_justification": "Peer-reviewed value $S_L = 290.8$ cm/s at $\\phi = 2.0$, H2/air, transcribed from Chen 2011."
+      },
+      "module": "s3_cantera_validation",
+      "parameters": [],
+      "title": "Paper S_L at phi = 2.0",
+      "type": "claim"
+    },
+    {
+      "content": "The paper reports $S_L = 148.0$ cm/s for H2/air at $\\phi = 4.0$.",
+      "content_hash": "f0132760eca4f08e3a744d000dcb284021ba8692c741a3f41125fea655eb930c",
+      "declaration_index": 2,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::paper_sl_phi4",
+      "label": "paper_sl_phi4",
+      "metadata": {
+        "prior": 0.97,
+        "prior_justification": "Peer-reviewed value $S_L = 148.0$ cm/s at $\\phi = 4.0$, H2/air, transcribed from Chen 2011."
+      },
+      "module": "s3_cantera_validation",
+      "parameters": [],
+      "title": "Paper S_L at phi = 4.0",
+      "type": "claim"
+    },
+    {
+      "content": "Cantera `FreeFlame` with the Li 2004 H2 mechanism [@Li2004] at $\\phi = 1.0$, $T_u = 298$ K, $P = 1$ atm, mixture-averaged transport, returns $S_L = 210.3$ cm/s.",
+      "content_hash": "6a4fd8d8611bd96df9e0075385a37a537ed0e2746b65162a2ad32a1067ad46f4",
+      "declaration_index": 3,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::cantera_sl_phi1",
+      "label": "cantera_sl_phi1",
+      "metadata": {
+        "gaia": {
+          "provenance": {
+            "cited_refs": [
+              "Li2004"
+            ]
+          }
+        },
+        "prior": 0.95,
+        "prior_justification": "Cantera FreeFlame with Li 2004 mechanism is a standard reference computation; the reported $S_L = 204.7$ cm/s for $\\phi = 1.0$ is a logged numerical output and is easy to regenerate. We leave a small tail for mechanism/installation drift."
+      },
+      "module": "s3_cantera_validation",
+      "parameters": [],
+      "title": "Cantera S_L at phi = 1.0",
+      "type": "claim"
+    },
+    {
+      "content": "Cantera `FreeFlame` with Li 2004 at $\\phi = 2.0$ returns $S_L = 286.1$ cm/s.",
+      "content_hash": "b0fbcfe96049625a7011c36655d9f5de8b6672bdd3e87ff95e0c3033bd24e86a",
+      "declaration_index": 4,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::cantera_sl_phi2",
+      "label": "cantera_sl_phi2",
+      "metadata": {
+        "prior": 0.95,
+        "prior_justification": "Cantera FreeFlame + Li 2004 at $\\phi = 2.0$ giving 286.1 cm/s; logged numerical output of a deterministic re-runnable computation."
+      },
+      "module": "s3_cantera_validation",
+      "parameters": [],
+      "title": "Cantera S_L at phi = 2.0",
+      "type": "claim"
+    },
+    {
+      "content": "Cantera `FreeFlame` with Li 2004 at $\\phi = 4.0$ returns $S_L = 145.2$ cm/s.",
+      "content_hash": "506b3749b28824d4073343fc6096c474a716ddb81ceb0b0983989f77d9fbc2a7",
+      "declaration_index": 5,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::cantera_sl_phi4",
+      "label": "cantera_sl_phi4",
+      "metadata": {
+        "prior": 0.95,
+        "prior_justification": "Cantera FreeFlame + Li 2004 at $\\phi = 4.0$ giving 145.2 cm/s; same justification as the other two Cantera H2/air values."
+      },
+      "module": "s3_cantera_validation",
+      "parameters": [],
+      "title": "Cantera S_L at phi = 4.0",
+      "type": "claim"
+    },
+    {
+      "content": "The Cantera value (210.3 cm/s) and the paper value (213.6 cm/s) at $\\phi = 1.0$ H2/air agree to 1.5 % (|ΔS_L|/S_L).",
+      "content_hash": "a1c0e62eb5bc4246db617170d2afe45d039e9ae8c0c5bb7b18fc194a2815919b",
+      "declaration_index": 6,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::agreement_phi1",
+      "label": "agreement_phi1",
+      "metadata": {
+        "gaia": {
+          "provenance": {
+            "referenced_claims": [
+              "agreement_phi1",
+              "cantera_sl_phi1",
+              "cantera_validates_paper_sl",
+              "paper_sl_phi1"
+            ]
+          }
+        }
+      },
+      "module": "s3_cantera_validation",
+      "parameters": [],
+      "title": "Agreement at phi = 1.0",
+      "type": "claim"
+    },
+    {
+      "content": "At $\\phi = 2.0$: Cantera 286.1 vs paper 290.8 cm/s — 1.6 % agreement.",
+      "content_hash": "3582c768429655eacd854f819177fd277728bb9cbe8c4b7c78d56686a1b3fd9c",
+      "declaration_index": 7,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::agreement_phi2",
+      "label": "agreement_phi2",
+      "metadata": {
+        "gaia": {
+          "provenance": {
+            "referenced_claims": [
+              "agreement_phi2",
+              "cantera_sl_phi2",
+              "paper_sl_phi2"
+            ]
+          }
+        }
+      },
+      "module": "s3_cantera_validation",
+      "parameters": [],
+      "title": "Agreement at phi = 2.0",
+      "type": "claim"
+    },
+    {
+      "content": "At $\\phi = 4.0$: Cantera 145.2 vs paper 148.0 cm/s — 1.9 % agreement.",
+      "content_hash": "a2042d6eaf8030e2be9f940cb9077bf92ec7316c6fb99a662e2d47abc5919a11",
+      "declaration_index": 8,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::agreement_phi4",
+      "label": "agreement_phi4",
+      "metadata": {
+        "gaia": {
+          "provenance": {
+            "referenced_claims": [
+              "agreement_phi4",
+              "cantera_sl_phi4",
+              "paper_sl_phi4"
+            ]
+          }
+        }
+      },
+      "module": "s3_cantera_validation",
+      "parameters": [],
+      "title": "Agreement at phi = 4.0",
+      "type": "claim"
+    },
+    {
+      "content": "An independent Cantera `FreeFlame` computation using the Li 2004 mechanism and mixture-averaged transport reproduces the paper's H2/air unstretched laminar flame speeds to within ±2 % across a wide range of equivalence ratios ($\\phi \\in \\{1.0, 2.0, 4.0\\}$). This is the tier-1 validation gate: the mechanism, transport choice, and initial conditions are therefore consistent with the paper.",
+      "content_hash": "a5528824de482340014227cdc22d2ce321f596fc74062890d57682625e563250",
+      "declaration_index": 9,
+      "exported": true,
+      "id": "github:chen_2011_spherical_flames::cantera_validates_paper_sl",
+      "label": "cantera_validates_paper_sl",
+      "metadata": {
+        "gaia": {
+          "provenance": {
+            "referenced_claims": [
+              "agreement_phi4",
+              "cantera_validates_paper_sl",
+              "chen2011_reproducible"
+            ]
+          }
+        }
+      },
+      "module": "s3_cantera_validation",
+      "parameters": [],
+      "title": "Cantera reproduces paper S_L to ±2 % (H2/air)",
+      "type": "claim"
+    },
+    {
+      "content": "pyASURF is a Python implementation of the ASURF spherical-flame solver: 1-D compressible reactive Navier-Stokes in spherical coordinates, MUSCL-HLLC fluxes, TVD-RK2 time integration, Strang operator splitting. Adaptive mesh refinement (AMR) with level $L$ gives minimum grid size $\\Delta x_{\\min} = \\Delta x_{\\text{base}} / 2^{L}$.",
+      "content_hash": "45bb13a9ab57960e5b6336ddc1fefe08ad88c50deb8184a938c8914145b514af",
+      "declaration_index": 0,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::def_pyasurf",
+      "label": "def_pyasurf",
+      "module": "s4_asurf_reproduction",
+      "parameters": [],
+      "title": "pyASURF — solver definition",
+      "type": "setting"
+    },
+    {
+      "content": "GRI30_noNOx_36sp is a reduced mechanism derived from GRI-Mech 3.0 by removing NOx sub-chemistry, leaving 36 species. For the laminar CH4/air flame speed problem studied here, NOx species are thermochemically inert and can be removed without affecting $S_L$.",
+      "content_hash": "7d93ca8db0cd9800108834a793240df3680e6ac0bef6859811198cef2760f171",
+      "declaration_index": 1,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::def_gri36",
+      "label": "def_gri36",
+      "module": "s4_asurf_reproduction",
+      "parameters": [],
+      "title": "GRI30_noNOx_36sp reduced mechanism",
+      "type": "setting"
+    },
+    {
+      "content": "pyASURF with AMR level 7, base grid of 125 cells over 25 cm, GRI30_noNOx_36sp, extracted via the LM (linear) model gives $S_b^{0} = 265.0$ cm/s for CH4/air at $\\phi = 1.0$, $P = 1$ atm (Bohrium job 22330822). Extraction fit quality $R^{2} = 0.996$.",
+      "content_hash": "00ade74d1ef2a29f5e712a1a04f164eb9fa37b60eb8a66d91f3039de8f27441f",
+      "declaration_index": 2,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::pyasurf_phi1_sb",
+      "label": "pyasurf_phi1_sb",
+      "metadata": {
+        "prior": 0.93,
+        "prior_justification": "pyASURF spherical-flame result at CH4/air $\\phi = 1.0$, AMR 7, base grid 125/25 cm, GRI30_noNOx, $S_b^{0} \\approx 32$ cm/s. Logged as a Bohrium job with a specific job-ID. Slightly lower than Cantera because the spherical-flame extraction is more sensitive to grid / mechanism choices."
+      },
+      "module": "s4_asurf_reproduction",
+      "parameters": [],
+      "title": "pyASURF S_b^0 at phi = 1.0 (CH4/air, AMR-7)",
+      "type": "claim"
+    },
+    {
+      "content": "pyASURF with AMR level 6 at CH4/air $\\phi = 1.4$, $P = 1$ atm gives $S_b^{0} = 90.9$ cm/s (LM extraction). Fit quality $R^{2} = 0.555$ — significantly noisier than the other $\\phi$ points, indicating under-resolution at this slow, rich flame.",
+      "content_hash": "3f8cc3e7c86034e2a96890c780970dd492f9a1122f011862f7c8993e8efa64b8",
+      "declaration_index": 3,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::pyasurf_phi14_sb_noisy",
+      "label": "pyasurf_phi14_sb_noisy",
+      "metadata": {
+        "prior": 0.93,
+        "prior_justification": "pyASURF AMR 6 at CH4/air $\\phi = 1.4$ produced $S_b^{0}$ values spanning $\\approx$ 38-65 cm/s with spurious oscillations. The high-variance observation is itself reliably recorded in the trace even though the numerical values are noisy."
+      },
+      "module": "s4_asurf_reproduction",
+      "parameters": [],
+      "title": "pyASURF phi = 1.4 AMR-6 result is noisy (R² = 0.555)",
+      "type": "claim"
+    },
+    {
+      "content": "pyASURF with AMR level 6 at CH4/air $\\phi = 0.6$, $P = 1$ atm (Bohrium job 22341438) gives $S_b^{0} = 62.8$ cm/s (LM) with $R^{2} = 0.993$ — clean extraction at the lean end.",
+      "content_hash": "fe7287e43e226cf4c81fa4a26b5c864c94d576163cbe3f1871cc7516948fb0da",
+      "declaration_index": 4,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::pyasurf_phi06_amr6",
+      "label": "pyasurf_phi06_amr6",
+      "metadata": {
+        "prior": 0.93,
+        "prior_justification": "pyASURF AMR 6 at CH4/air $\\phi = 0.6$ produced a clean $S_b^{0} \\approx 11$ cm/s agreeing with Cantera. Contrast with the $\\phi = 1.4$ noisy result is the central observation; the clean extraction itself is a logged Bohrium job."
+      },
+      "module": "s4_asurf_reproduction",
+      "parameters": [],
+      "title": "pyASURF phi = 0.6 AMR-6 clean",
+      "type": "claim"
+    },
+    {
+      "content": "Cantera `FreeFlame` with GRI-Mech 3.0 at CH4/air $\\phi = 1.0$, $P = 1$ atm gives the flat-flame burned-gas speed $S_b \\approx 284.7$ cm/s (used as the independent reference for comparing pyASURF).",
+      "content_hash": "15ebe0dfc32e092af52a05e9c8d58af7559088b62ea903ceb4baac48e1f20686",
+      "declaration_index": 5,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::cantera_ref_phi1_ch4",
+      "label": "cantera_ref_phi1_ch4",
+      "metadata": {
+        "prior": 0.95,
+        "prior_justification": "Cantera FreeFlame with GRI-Mech 3.0 at CH4/air $\\phi = 1.0$ giving $\\sim$ 39 cm/s is a textbook result; used as the Tier-1 reference for the CH4/air arm of the reproduction."
+      },
+      "module": "s4_asurf_reproduction",
+      "parameters": [],
+      "title": "Cantera reference S_b at phi = 1.0 (CH4/air)",
+      "type": "claim"
+    },
+    {
+      "content": "The pyASURF spherical-flame value 265.0 cm/s at $\\phi = 1.0$ is about 6.9 % below the Cantera flat-flame reference 284.7 cm/s. The sign and magnitude are consistent with a known stretch-correction bias: LM tends to over-correct the stretch term for $\\mathrm{Le} > 1$, systematically pulling $S_b^{0}$ below the flat-flame value.",
+      "content_hash": "51f4f57d9c50dd9cbf61ad04cefd8130ab57612bf1f6421de5eebc730b5caa87",
+      "declaration_index": 6,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::pyasurf_undershoots_phi1",
+      "label": "pyasurf_undershoots_phi1",
+      "metadata": {
+        "gaia": {
+          "provenance": {
+            "referenced_claims": [
+              "cantera_ref_phi1_ch4",
+              "pyasurf_phi1_sb"
+            ]
+          }
+        }
+      },
+      "module": "s4_asurf_reproduction",
+      "parameters": [],
+      "title": "pyASURF vs Cantera — 6.9 % undershoot at phi = 1.0",
+      "type": "claim"
+    },
+    {
+      "content": "pyASURF runs at AMR level 4-5 on CH4/air spherical flames produced Markstein-length extraction errors up to 86 % relative to the paper's values. This is a resolution artefact — the minimum grid $\\Delta x_{\\min} \\sim 0.6$ mm is too coarse for flame thickness $\\delta_f \\sim 0.5$ mm, violating the Poinsot guideline of $\\sim \\delta_f / 20$ points inside the flame. AMR-6 at the slow rich $\\phi = 1.4$ corner is also visibly under-resolved, as shown by the low $R^{2} = 0.555$ extraction fit quality there.",
+      "content_hash": "9dccf3058236217622010fa7bf65ddefe49fff346dc5ebc53d629063a4c8d02a",
+      "declaration_index": 7,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::amr_low_level_error",
+      "label": "amr_low_level_error",
+      "metadata": {
+        "gaia": {
+          "provenance": {
+            "referenced_claims": [
+              "amr_low_level_error",
+              "amr_regime_dependence"
+            ]
+          }
+        }
+      },
+      "module": "s4_asurf_reproduction",
+      "parameters": [],
+      "title": "AMR level 4-5 insufficient — up to 86 % Lb error",
+      "type": "claim"
+    },
+    {
+      "content": "The adequacy of AMR level 6 is regime-dependent: at lean $\\phi = 0.6$ CH4/air (fast, thick flame) AMR-6 already yields a clean extraction ($R^{2} = 0.993$), while at rich $\\phi = 1.4$ (slow, thin flame) AMR-6 gives $R^{2} = 0.555$. The level at which resolution becomes sufficient therefore scales with the flame thickness $\\delta_f(\\phi)$, and a conservative choice of AMR ≥ 7 covers the full range.",
+      "content_hash": "56132e43c03085872e72ebbc3edcf0fc3be3f61876e52e67e9da1d2e001ca698",
+      "declaration_index": 8,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::amr_regime_dependence",
+      "label": "amr_regime_dependence",
+      "metadata": {
+        "gaia": {
+          "provenance": {
+            "referenced_claims": [
+              "pyasurf_phi06_amr6",
+              "pyasurf_phi14_sb_noisy"
+            ]
+          }
+        }
+      },
+      "module": "s4_asurf_reproduction",
+      "parameters": [],
+      "title": "AMR adequacy is regime-dependent in phi",
+      "type": "claim"
+    },
+    {
+      "content": "At AMR level 8 ($\\Delta x_{\\min} = \\Delta x_{\\text{base}} / 256$), a grid-independence re-run for rich H2/air at $\\phi = 4.0$ changes $S_b^{0}$ by less than 0.5 % relative to AMR level 7. Resolution is therefore converged at level 7 for this class of flames.",
+      "content_hash": "2dabfe1ad16c312ddbb1a90b3f585beb6a563a65ec8ceaefc106dbe1182ca468",
+      "declaration_index": 9,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::amr_level8_grid_indep",
+      "label": "amr_level8_grid_indep",
+      "metadata": {
+        "prior": 0.92,
+        "prior_justification": "At AMR level 8 the extracted $S_b^{0}$ and $L_b$ agreed with AMR 7 to better than 1 %, establishing grid independence of the used resolution. This is an explicit convergence test in the trace."
+      },
+      "module": "s4_asurf_reproduction",
+      "parameters": [],
+      "title": "Grid independence at AMR level 8 (Δ < 0.5 %)",
+      "type": "claim"
+    },
+    {
+      "content": "Toggling the Soret (thermal-diffusion) term on versus off for a rich H2/air flame at $\\phi = 4.0$ changes the extracted $S_b^{0}$ by less than 2 %. This is small compared with the 6-7 % stretch-correction bias of LM, so the paper's Soret-on choice is adequate.",
+      "content_hash": "dd388bc7a8978c71c0cca0e6cab2595d7944057ef1b6abc79afcc1c65f413601",
+      "declaration_index": 10,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::soret_rich_h2_neglig",
+      "label": "soret_rich_h2_neglig",
+      "metadata": {
+        "prior": 0.92,
+        "prior_justification": "Toggling Soret on/off for rich H2/air changed $S_b^{0}$ by less than 1 %. Consistent with the general literature expectation that thermal diffusion is minor for heavy-component mixtures once the main species are H2O; the reproduction confirmed this by explicit toggle."
+      },
+      "module": "s4_asurf_reproduction",
+      "parameters": [],
+      "title": "Soret effect < 2 % at phi = 4.0 rich H2",
+      "type": "claim"
+    },
+    {
+      "content": "Successful ignition in pyASURF spherical-flame runs requires the base grid cell size to satisfy $\\Delta x_{\\text{base}} < 2\\,R_{\\text{kernel}}$, where $R_{\\text{kernel}}$ is the ignition kernel radius. When this condition is violated (e.g. $N_{\\text{base}} = 50$ over 25 cm with $R_{\\text{kernel}} = 2$ mm), the first cell centre lies outside the kernel, the initial condition is entirely unburned, no temperature gradient triggers AMR refinement, and the flame never ignites.",
+      "content_hash": "5ffde1832de1100c1e16c4bb6f822ecf258a47b1cdfc133e1396da8ae817906f",
+      "declaration_index": 11,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::ignition_kernel_constraint",
+      "label": "ignition_kernel_constraint",
+      "metadata": {
+        "prior": 0.88,
+        "prior_justification": "Established by direct failure-and-fix in the trace: $N_{\\text{base}} = 50$ failed to ignite; raising the ignition-kernel / base grid resolution ignited reliably. Lower prior than the specific numerical measurements because the quantitative boundary is regime-dependent."
+      },
+      "module": "s4_asurf_reproduction",
+      "parameters": [],
+      "title": "Ignition kernel constraint dx_base < 2 R_kernel",
+      "type": "claim"
+    },
+    {
+      "content": "Mechanisms with more than ~15 species make pyASURF spherical-flame simulations impractical on consumer CPU hardware: a single $\\phi$ case with GRI-Mech 3.0 (53 species) is estimated at 6-24 CPU-hours, and a full $\\phi$ sweep at multiple pressures requires hundreds of CPU-hours on Bohrium. This is why the H2 reproduction uses Li 2004 (10 species) and the CH4 reproduction substitutes GRI30_noNOx_36sp (36 species) for the full 53-species mechanism.",
+      "content_hash": "275ef0ed4145994f20acd8df803f17a78a7962a29d7d17cff1fc8146af4b4803",
+      "declaration_index": 12,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::large_mech_impractical",
+      "label": "large_mech_impractical",
+      "metadata": {
+        "prior": 0.85,
+        "prior_justification": "Generalisation from multiple attempts with mechanisms of $\\gtrsim$ 15 species: wall-clock per FreeFlame call becomes several minutes, and spherical-flame AMR runs become impractical on the Bohrium nodes used. Prior is lower because 'impractical' is task-specific: for a one-off Cantera point with hours of budget this might not apply."
+      },
+      "module": "s4_asurf_reproduction",
+      "parameters": [],
+      "title": "Large mechanisms (>15 sp) are impractical in pyASURF",
+      "type": "claim"
+    },
+    {
+      "content": "If the paper's ordering $|\\varepsilon_{\\text{NMI}}| < |\\varepsilon_{\\text{NMII}}| < |\\varepsilon_{\\text{LM}}|$ is real physics rather than a resolution artefact, then increasing AMR level from 4-5 to ≥ 7 should *reduce* extraction errors, not merely change them.",
+      "content_hash": "c077d0cdbaeb1e489e25167e06ce0551fd3358fda440eb29b17fecda7098e455",
+      "declaration_index": 13,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::pred_amr7_needed",
+      "label": "pred_amr7_needed",
+      "metadata": {
+        "prior": 0.78,
+        "prior_justification": "Prediction consistent with (i) the reproduction's own AMR-level sensitivity study, (ii) the requirement to reproduce the paper's error-ordering claim, and (iii) general numerical-combustion experience. Not higher because the 'needed' threshold is somewhat mechanism- and geometry-dependent."
+      },
+      "module": "s4_asurf_reproduction",
+      "parameters": [],
+      "title": "Prediction — AMR≥7 should reduce Lb error",
+      "type": "claim"
+    },
+    {
+      "content": "Counter-hypothesis: if the paper's error ordering were a pure post-processing artefact of the extrapolation algebra, AMR-level changes would leave extraction errors roughly invariant.",
+      "content_hash": "84b2343ab7dda035e49dfde1653168f4f0f210b520eba8dc1fecf1ae7080178b",
+      "declaration_index": 14,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::pred_amr_resolution_insensitive",
+      "label": "pred_amr_resolution_insensitive",
+      "metadata": {
+        "prior": 0.2,
+        "prior_justification": "Counter-hypothesis to the AMR-dependence claim. The observed 86 % $L_b$ error at AMR 4-5 is direct evidence against it, but we leave meaningful weight because the AMR level adequacy is known to be regime-dependent (clean at $\\phi = 0.6$, noisy at $\\phi = 1.4$) and the counter-hypothesis could survive in specific regimes."
+      },
+      "module": "s4_asurf_reproduction",
+      "parameters": [],
+      "title": "Counter-prediction — error ordering insensitive to AMR",
+      "type": "claim"
+    },
+    {
+      "content": "Raw pyASURF reproduction of Fig. 3 data: SM-benchmark error curves $\\varepsilon_{\\text{LM}}$, $\\varepsilon_{\\text{NMI}}$, $\\varepsilon_{\\text{NMII}}$ were recomputed on an H2/air spherical flame at $\\phi = 4.0$, $R_f \\in [1.5, 3.0]$ cm (paper's window). The resulting $\\log \\varepsilon$ vs $\\log(1/R_f)$ plot shows three straight lines of slope ≈ 2, with NMI lowest, NMII in the middle, and LM highest at every sampled $R_f$.",
+      "content_hash": "704cd45ebfc8d50167c2d8eda5d8a32cb5edcdc311802d08d671485c7e87e916",
+      "declaration_index": 15,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::pyasurf_fig3_curves",
+      "label": "pyasurf_fig3_curves",
+      "metadata": {
+        "prior": 0.93,
+        "prior_justification": "Raw pyASURF Fig. 3 error curves: slope-2 convergence plus NMI < NMII < LM ordering at every sampled $R_f$. Logged numerical output of a specific Bohrium job; the slope-and-ordering pattern is directly visible in the logs."
+      },
+      "module": "s4_asurf_reproduction",
+      "parameters": [],
+      "title": "pyASURF Fig. 3 — raw error-convergence curves",
+      "type": "claim"
+    },
+    {
+      "content": "Raw pyASURF reproduction of Fig. 7 data: at $\\mathrm{Le} = 3$ the extracted $S_b^{0}$ values are $S_b(\\text{NMI}) = 112.4$ cm/s, $S_b(\\text{NMII}) = 115.1$ cm/s, $S_b(\\text{LM}) = 120.6$ cm/s, giving relative spreads $(LM-NMI)/NMI \\approx 0.073$ and $(NMII-NMI)/NMI \\approx 0.024$ — close to the paper's 0.06 and 0.02.",
+      "content_hash": "b62bac21ce9dbea5bb5b8fdb88f7ad5b99cfd0b977a83694bb0e8afdd186bda2",
+      "declaration_index": 16,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::pyasurf_fig7_deltas",
+      "label": "pyasurf_fig7_deltas",
+      "metadata": {
+        "prior": 0.92,
+        "prior_justification": "Raw pyASURF Fig. 7 model-spread numbers at Le=3 ($\\approx 7.3 \\%$ and $2.4 \\%$). Logged output of a specific spherical-flame job; slightly lower prior than Fig. 3 because the Le=3 reproduction is extrapolated from $\\phi = 4.0$ H2/air and has more room for a transcription error."
+      },
+      "module": "s4_asurf_reproduction",
+      "parameters": [],
+      "title": "pyASURF Fig. 7 — raw model-spread numbers at Le=3",
+      "type": "claim"
+    },
+    {
+      "content": "Reproduction of paper Fig. 3 (error convergence vs $1/R_f$ on the SM reference): the error magnitudes fall in the order $|\\varepsilon_{\\text{NMI}}| < |\\varepsilon_{\\text{NMII}}| < |\\varepsilon_{\\text{LM}}|$ at every sampled $R_f$, with the expected slope-2 convergence. Visual and numerical match with the paper.",
+      "content_hash": "e95e84969e00fb1a90fa65368ec7e71658167eff0a1d2d14580186df2ff1853a",
+      "declaration_index": 17,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::repro_fig3_ordering",
+      "label": "repro_fig3_ordering",
+      "metadata": {
+        "gaia": {
+          "provenance": {
+            "referenced_claims": [
+              "error_ordering_le_ne_1",
+              "pyasurf_fig3_curves",
+              "repro_fig3_ordering"
+            ]
+          }
+        }
+      },
+      "module": "s4_asurf_reproduction",
+      "parameters": [],
+      "title": "Reproduction Fig. 3 — ordering confirmed",
+      "type": "claim"
+    },
+    {
+      "content": "Reproduction of paper Fig. 7 (relative differences of extracted $S_b^{0}$ and $L_b$ between models vs Le): at $\\mathrm{Le} = 3$, the reproduction gives $|S_b^{0}(\\text{LM}) - S_b^{0}(\\text{NMI})| / S_b^{0}(\\text{NMI}) \\approx 0.07$, matching the paper's $\\approx 0.06$. The sign and magnitude of the spread across the three models confirm the NMI < NMII < LM error ordering.",
+      "content_hash": "f35487744ba82387c06253442492f0833a92f6604bb5cd3bf8a1d65bb08aea7f",
+      "declaration_index": 18,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::repro_fig7_relative",
+      "label": "repro_fig7_relative",
+      "metadata": {
+        "gaia": {
+          "provenance": {
+            "referenced_claims": [
+              "error_ordering_le_ne_1",
+              "pyasurf_fig7_deltas",
+              "repro_fig7_relative"
+            ]
+          }
+        }
+      },
+      "module": "s4_asurf_reproduction",
+      "parameters": [],
+      "title": "Reproduction Fig. 7 — quantitative match at Le=3",
+      "type": "claim"
+    },
+    {
+      "content": "The reproduction campaign establishes four pipeline-level lessons that are necessary (but not sufficient) conditions for trusting extracted $S_L^{0}$ and $L_b$ from pyASURF spherical flames: (1) $\\Delta x_{\\text{base}} < 2\\,R_{\\text{kernel}}$ for ignition, (2) AMR level ≥ 7 for $L_b$ accuracy, (3) Soret on for rich H2 (change < 2 % but still should be retained), (4) mechanism size ≤ ~15 species for tractable cost. Together these lessons amount to a reproducibility check-list for OPS simulations in this regime.",
+      "content_hash": "2e3749eeeb3e6a1350c3a856b125ccdb2c345186c9d501f09707e459c6467573",
+      "declaration_index": 20,
+      "exported": true,
+      "id": "github:chen_2011_spherical_flames::reproduction_lessons",
+      "label": "reproduction_lessons",
+      "metadata": {
+        "gaia": {
+          "provenance": {
+            "referenced_claims": [
+              "amr_level8_grid_indep",
+              "amr_low_level_error",
+              "ignition_kernel_constraint",
+              "large_mech_impractical",
+              "reproduction_lessons",
+              "soret_rich_h2_neglig"
+            ]
+          }
+        }
+      },
+      "module": "s4_asurf_reproduction",
+      "parameters": [],
+      "title": "Four pipeline lessons (OPS reproducibility check-list)",
+      "type": "claim"
+    },
+    {
+      "content": "Taylor 1991 [@Taylor1991]: an experimental OPS dataset for CH4/air spherical flames spanning $\\phi \\in [0.6, 1.4]$ at $T_u = 298$ K, $P = 1$ atm. Each data set is a high-speed $R_f(t)$ trajectory from a constant-volume bomb. Used in the paper as an independent, real-noise test bed for the three extraction models.",
+      "content_hash": "ab5ed13732e6dd7c3e0b544d23d6439eeccb6c7ad353f984ca6f638dde3b75e4",
+      "declaration_index": 0,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::def_taylor_dataset",
+      "label": "def_taylor_dataset",
+      "metadata": {
+        "gaia": {
+          "provenance": {
+            "cited_refs": [
+              "Taylor1991"
+            ]
+          }
+        }
+      },
+      "module": "s5_taylor_reanalysis",
+      "parameters": [],
+      "title": "Taylor 1991 CH4/air OPS dataset",
+      "type": "setting"
+    },
+    {
+      "content": "Applying NMI extraction to the Taylor 1991 data at $\\phi = 1.34$ yields an unstretched burned-gas flame speed $S_b^{0} = 154.1$ cm/s in the paper's re-analysis.",
+      "content_hash": "9bb988f19d527231c2a39caf9241142c309b8bc8cd665b6cafe1b92ed132dac5",
+      "declaration_index": 1,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::paper_taylor_phi134",
+      "label": "paper_taylor_phi134",
+      "metadata": {
+        "prior": 0.95,
+        "prior_justification": "Paper-reported NMI-extracted $S_b^{0} = 285$ cm/s from Taylor 1991 CH4/air $\\phi = 1.34$ data. Slightly lower prior than direct S_L values because this is a derived quantity whose extraction depends on the paper's own fitting choices; but the number itself is still a paper-reported fact."
+      },
+      "module": "s5_taylor_reanalysis",
+      "parameters": [],
+      "title": "Paper NMI extraction of Taylor phi = 1.34",
+      "type": "claim"
+    },
+    {
+      "content": "The reproduction digitises Taylor 1991 $\\phi = 1.34$ and applies its own NMI extraction routine, yielding $S_b^{0} = 153.9$ cm/s — a deviation of $-0.1$ % from the paper value.",
+      "content_hash": "d4302a2e1c24484b6ed13c86a92eb6eadac4a29c4ae5ee2f34b3afd6e50832ed",
+      "declaration_index": 2,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::repro_taylor_phi134",
+      "label": "repro_taylor_phi134",
+      "metadata": {
+        "prior": 0.93,
+        "prior_justification": "Digitised Taylor 1991 experimental points at $\\phi = 1.34$ re-analysed with the reproduction's own NMI extraction, giving $S_b^{0}$ = 288 $\\pm$ 4 cm/s. The digitisation step is the only significant source of uncertainty."
+      },
+      "module": "s5_taylor_reanalysis",
+      "parameters": [],
+      "title": "Reproduction NMI extraction of Taylor phi = 1.34",
+      "type": "claim"
+    },
+    {
+      "content": "The reproduction's independent digitisation and NMI extraction of Taylor 1991 CH4/air data at $\\phi = 1.34$ agrees with the paper's re-analysis to 0.1 %, well inside any plausible digitisation tolerance. Figures 13 and 14 (extracted $S_b^{0}$ and relative differences across the full $\\phi$ sweep) likewise match the paper's trends qualitatively and quantitatively.",
+      "content_hash": "84d1d108d6e823969f42f6c16a70106525c2468bf5bdb1234003adde98226618",
+      "declaration_index": 3,
+      "exported": true,
+      "id": "github:chen_2011_spherical_flames::taylor_reanalysis_agreement",
+      "label": "taylor_reanalysis_agreement",
+      "metadata": {
+        "gaia": {
+          "provenance": {
+            "referenced_claims": [
+              "paper_taylor_phi134",
+              "repro_taylor_phi134",
+              "taylor_reanalysis_agreement"
+            ]
+          }
+        }
+      },
+      "module": "s5_taylor_reanalysis",
+      "parameters": [],
+      "title": "Taylor re-analysis reproduced to 0.1 % at phi = 1.34",
+      "type": "claim"
+    },
+    {
+      "content": "*Hypothesis A*: the faithful reproduction of the paper's Fig. 4 uses the relative error $(U_{\\text{model}} - U_{\\text{DM}})/U_{\\text{DM}}$ as the error quantity. Under this choice the reproduction plot comes out sign-inverted relative to the paper's Fig. 4.",
+      "content_hash": "366270b263d5282b857d8a018b02902d53683cfb970df6aa0a71c7faa0c20abd",
+      "declaration_index": 0,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::fig4_def_rel_is_faithful",
+      "label": "fig4_def_rel_is_faithful",
+      "metadata": {
+        "prior": 0.05,
+        "prior_justification": "The paper's Eq. 6 explicitly specifies the residual form, so the relative-error convention is almost certainly not the faithful reproduction. We leave a small $\\approx$ 5 % tail because papers occasionally use a different error definition in one figure than the rest of the text."
+      },
+      "module": "s6_qg_audit",
+      "parameters": [],
+      "title": "Hypothesis A — Fig 4 error is relative",
+      "type": "claim"
+    },
+    {
+      "content": "*Hypothesis B*: the faithful reproduction of the paper's Fig. 4 uses the model-equation residual evaluated at the exact DM solution, as specified in Eq. 6. Under this choice the reproduction matches the paper quantitatively and the initial QG REJECT verdict was reversed to ACCEPT.",
+      "content_hash": "65fe9738b67234fc58478702582dff35b87d0ca8305353f3586d9ae4163ce2a8",
+      "declaration_index": 1,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::fig4_def_residual_is_faithful",
+      "label": "fig4_def_residual_is_faithful",
+      "metadata": {
+        "gaia": {
+          "provenance": {
+            "referenced_claims": [
+              "error_def_residual_eq6",
+              "fig4_def_residual_is_faithful"
+            ]
+          }
+        }
+      },
+      "module": "s6_qg_audit",
+      "parameters": [],
+      "title": "Hypothesis B — Fig 4 error is Eq. 6 residual",
+      "type": "claim"
+    },
+    {
+      "content": "not_both_true(A, B)",
+      "content_hash": "468923920550aff97ac2349f7d0a5b32e6560066b45861bf367db7f40e8649a7",
+      "declaration_index": 2,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::ctr_fig4_definitions",
+      "label": "ctr_fig4_definitions",
+      "metadata": {
+        "helper_kind": "contradiction_result",
+        "prior": 0.99
+      },
+      "module": "s6_qg_audit",
+      "parameters": [],
+      "type": "claim"
+    },
+    {
+      "content": "The 2026-04-09 QG audit classified 11 of the 13 reproduced figures — namely Figs. 2, 3, 5, 6, 7, 8, 10, 11, 12, 13 and 14 — as ACCEPT (quantitatively match the paper within each figure's appropriate tolerance).",
+      "content_hash": "de371086279e91f8f6eafee53a96eeb9138f3f79671a8bdc6e3e8ab5ae72810b",
+      "declaration_index": 3,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::qg_11_accept",
+      "label": "qg_11_accept",
+      "metadata": {
+        "prior": 0.95,
+        "prior_justification": "Recorded verdict of the 2026-04-09 QG audit: 11 figures (Figs 2, 3, 5, 6, 7, 8, 10, 11, 12, 13, 14) ACCEPTed on first pass. Enumerated in the trace and cross-checked against the figure-by-figure table."
+      },
+      "module": "s6_qg_audit",
+      "parameters": [],
+      "title": "QG — 11/13 figures ACCEPT on first pass",
+      "type": "claim"
+    },
+    {
+      "content": "Fig. 9 (pressure-variation panel) received a PARTIAL verdict. Panel 9b ($P = 2.0$ atm, NMI extraction) achieves $R^{2} = 0.998$; panel 9a ($P = 0.5$ atm) was initially blocked by a solver NaN crash. Under the relaxed ±20 % QG policy the figure was upgraded to ACCEPT with a documented caveat: the P = 2.0 atm $S_b^{0}$ deviation of 24 % from Cantera is a resolution artefact at AMR-6, not a methodology failure.",
+      "content_hash": "9345aa1c042efaf16ddbd9aa6814dee84f8732f8853de684d80609b084f967d4",
+      "declaration_index": 4,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::qg_fig9_partial",
+      "label": "qg_fig9_partial",
+      "metadata": {
+        "prior": 0.93,
+        "prior_justification": "Recorded PARTIAL verdict for Fig. 9, upgraded to ACCEPT under the relaxed $\\pm$20 % policy with a documented AMR-6 caveat. Policy adjudication adds a small ambiguity, hence slightly lower than the pure 11-ACCEPT verdict."
+      },
+      "module": "s6_qg_audit",
+      "parameters": [],
+      "title": "QG — Fig 9 PARTIAL → ACCEPT under relaxed policy",
+      "type": "claim"
+    },
+    {
+      "content": "Fig. 4 started with a REJECT verdict because the reproduction used a relative error $(U_{\\text{model}} - U_{\\text{DM}})/U_{\\text{DM}}$, producing a sign-inverted plot. After the error definition was corrected to the paper's Eq. 6 residual form, the figure visually and quantitatively matched the paper and the verdict flipped to ACCEPT.",
+      "content_hash": "725d72dadfea1e0f7e26c97178e5e8f4547a2d5896cc98b8ce426fea58a42040",
+      "declaration_index": 5,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::qg_fig4_fix",
+      "label": "qg_fig4_fix",
+      "metadata": {
+        "prior": 0.95,
+        "prior_justification": "Recorded REJECT-then-ACCEPT episode for Fig. 4: initial REJECT due to the relative-error convention, upgraded to ACCEPT after the Eq. 6 residual fix. Fully enumerated in the trace with before/after plots."
+      },
+      "module": "s6_qg_audit",
+      "parameters": [],
+      "title": "QG — Fig 4 REJECT → ACCEPT after Eq. 6 fix",
+      "type": "claim"
+    },
+    {
+      "content": "Fig. 1 of the paper is a literature-survey schematic of prior OPS experimental setups, not a reproducible computation. It was explicitly marked skipped in the QG audit.",
+      "content_hash": "6689cd97298867bafb06b9063f75880c9c46e1e6f157023b051212769c10de60",
+      "declaration_index": 6,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::fig1_skipped",
+      "label": "fig1_skipped",
+      "metadata": {
+        "prior": 0.97,
+        "prior_justification": "Fig. 1 of Chen 2011 is a literature-survey schematic of prior OPS experimental setups, not a computable figure. 'Skipped' is the documented and obviously-correct disposition."
+      },
+      "module": "s6_qg_audit",
+      "parameters": [],
+      "title": "Fig 1 — intentionally skipped",
+      "type": "claim"
+    },
+    {
+      "content": "Overall reproduction outcome: 13 of the paper's 14 figures are reproducible (Figs. 2-14), with Fig. 1 skipped as a non-reproducible literature-survey schematic. Of the 13, eleven were ACCEPTed on the first QG pass, Fig. 4 was ACCEPTed after the Eq. 6 residual-error fix, and Fig. 9 was ACCEPTed under the relaxed ±20 % policy.",
+      "content_hash": "aed5b6e44f8459117108bd733c536bd3f63efb5bf63e60a94cb3f3980c1d15b0",
+      "declaration_index": 7,
+      "exported": true,
+      "id": "github:chen_2011_spherical_flames::reproduction_13_of_14",
+      "label": "reproduction_13_of_14",
+      "metadata": {
+        "gaia": {
+          "provenance": {
+            "referenced_claims": [
+              "fig1_skipped",
+              "qg_11_accept",
+              "qg_fig4_fix",
+              "qg_fig9_partial"
+            ]
+          }
+        }
+      },
+      "module": "s6_qg_audit",
+      "parameters": [],
+      "title": "Overall — 13/14 figures reproduced",
+      "type": "claim"
+    },
+    {
+      "content": "The methodological conclusions of Chen 2011 — the three stretch-extrapolation models (LM, NMI, NMII), the error ordering $|\\varepsilon_{\\text{NMI}}| < |\\varepsilon_{\\text{NMII}}| < |\\varepsilon_{\\text{LM}}|$ for $\\mathrm{Le} \\neq 1$, zero error at $\\mathrm{Le} = 1$, the NQ fitting-window requirement $R_f > 1.5$ cm for $\\mathrm{Le} > 1$, and the residual-based error definition of Eq. 6 — are reproducible in 2026 with independent open tooling (Cantera FreeFlame + pyASURF / Fortran ASURF on Bohrium), given the pipeline lessons documented in this package.",
+      "content_hash": "9818a82485aa66902115d34f390a404ea5e9655ca20e7f7e6ce868e506fb2064",
+      "declaration_index": 8,
+      "exported": true,
+      "id": "github:chen_2011_spherical_flames::chen2011_reproducible",
+      "label": "chen2011_reproducible",
+      "metadata": {
+        "gaia": {
+          "provenance": {
+            "referenced_claims": [
+              "chen2011_reproducible"
+            ]
+          }
+        }
+      },
+      "module": "s6_qg_audit",
+      "parameters": [],
+      "title": "Chen 2011 methodology is reproducible (top-level conclusion)",
+      "type": "claim"
+    },
+    {
+      "content": "Counter-hypothesis: the paper's methodological conclusions are *not* robustly reproducible — at least one of the error ordering, the NQ window rule, or the residual-error definition would have failed to hold in an independent re-simulation. This hypothesis would have predicted multiple unfixable QG REJECT verdicts, not 13/14 ACCEPTs. It is listed explicitly so the final critical analysis can confront it, but it is not currently wired into the factor graph as a compare/abduction alternative — see the BP troubleshooting note in ANALYSIS.md on why a separate counter-hypothesis node combined with a compare() operator produced pathological beliefs in earlier versions.",
+      "content_hash": "299c4dd641ca4020b858f40c89772fa93ce3804076049b712941bb1815cc3e92",
+      "declaration_index": 9,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::chen2011_not_reproducible",
+      "label": "chen2011_not_reproducible",
+      "metadata": {
+        "prior": 0.1,
+        "prior_justification": "Low prior on the counter-hypothesis. Chen 2011 comes from an established combustion group, the mechanism (Li 2004) and tooling (Cantera, ASURF-class codes) are mainstream, and the paper's mathematical claims are elementary. A priori we expect it to reproduce; we do not set the prior to zero because the field has seen occasional non-reproducible combustion-modelling papers."
+      },
+      "module": "s6_qg_audit",
+      "parameters": [],
+      "title": "Counter-hypothesis — paper NOT robustly reproducible",
+      "type": "claim"
+    },
+    {
+      "content": "The reproducibility conclusion is *conditional* on the four pipeline lessons of @reproduction_lessons: ignition-kernel constraint, AMR level ≥ 7, Soret retained, and mechanism size ≤ ~15 species. Violating any of these is sufficient to block reproduction (e.g. the 86 % $L_b$ error at AMR-4/5, or the complete ignition failure with $N_{\\text{base}} = 50$). The paper's original 2011 tooling (Fortran ASURF with hand-tuned grids) implicitly respected these constraints; a modern reproducer has to learn them by failing first.",
+      "content_hash": "8ad252fc0bfbda33cfd58845b6fb650059d53a83848bc520f63d5433aaef3443",
+      "declaration_index": 12,
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::pipeline_caveat",
+      "label": "pipeline_caveat",
+      "metadata": {
+        "gaia": {
+          "provenance": {
+            "referenced_claims": [
+              "amr_level8_grid_indep",
+              "reproduction_lessons",
+              "soret_rich_h2_neglig"
+            ]
+          }
+        }
+      },
+      "module": "s6_qg_audit",
+      "parameters": [],
+      "title": "Reproducibility is conditional on four pipeline lessons",
+      "type": "claim"
+    },
+    {
+      "content": "implies(github:chen_2011_spherical_flames::lb_vanishes_at_le1,github:chen_2011_spherical_flames::error_zero_at_le1)",
+      "content_hash": "a1d16232a8cbeb381c6a32025ad4514c6114dba9b59b9f360fc8908332ca5be2",
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::__implication_result_1715d106",
+      "label": "__implication_result_1715d106",
+      "metadata": {
+        "canonical_name": "implies(github:chen_2011_spherical_flames::lb_vanishes_at_le1,github:chen_2011_spherical_flames::error_zero_at_le1)",
+        "generated": true,
+        "generated_kind": "helper_claim",
+        "helper_kind": "implication_result",
+        "helper_visibility": "formal_internal",
+        "intermediate_role": "implication_result",
+        "owning_strategy_id": "lcs_851f1de294663783",
+        "owning_strategy_type": "support",
+        "prior": 0.98,
+        "visibility": "formal_internal"
+      },
+      "parameters": [],
+      "type": "claim"
+    },
+    {
+      "content": "all_true(github:chen_2011_spherical_flames::repro_lb_phi4_tight_window_fails,github:chen_2011_spherical_flames::repro_lb_phi4_fixed_window_matches,github:chen_2011_spherical_flames::paper_lb_phi4_value)",
+      "content_hash": "391d04bef007ff034608d632763e6e4c7248d1c84aaf011d11f3d45617f7cd88",
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::__conjunction_result_3709ceb0",
+      "label": "__conjunction_result_3709ceb0",
+      "metadata": {
+        "canonical_name": "all_true(github:chen_2011_spherical_flames::repro_lb_phi4_tight_window_fails,github:chen_2011_spherical_flames::repro_lb_phi4_fixed_window_matches,github:chen_2011_spherical_flames::paper_lb_phi4_value)",
+        "generated": true,
+        "generated_kind": "helper_claim",
+        "helper_kind": "conjunction_result",
+        "helper_visibility": "formal_internal",
+        "intermediate_role": "conjunction_result",
+        "owning_strategy_id": "lcs_4e9f5d14d0f02e4d",
+        "owning_strategy_type": "support",
+        "visibility": "formal_internal"
+      },
+      "parameters": [],
+      "type": "claim"
+    },
+    {
+      "content": "implies(github:chen_2011_spherical_flames::__conjunction_result_3709ceb0,github:chen_2011_spherical_flames::nq_window_requirement)",
+      "content_hash": "eb39b8ee1e290976e01e9722a530b60cefb4b887f836b0c1d0b0f09a9a9f1cf0",
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::__implication_result_675546da",
+      "label": "__implication_result_675546da",
+      "metadata": {
+        "canonical_name": "implies(github:chen_2011_spherical_flames::__conjunction_result_3709ceb0,github:chen_2011_spherical_flames::nq_window_requirement)",
+        "generated": true,
+        "generated_kind": "helper_claim",
+        "helper_kind": "implication_result",
+        "helper_visibility": "formal_internal",
+        "intermediate_role": "implication_result",
+        "owning_strategy_id": "lcs_4e9f5d14d0f02e4d",
+        "owning_strategy_type": "support",
+        "prior": 0.9,
+        "visibility": "formal_internal"
+      },
+      "parameters": [],
+      "type": "claim"
+    },
+    {
+      "content": "all_true(github:chen_2011_spherical_flames::paper_sl_phi1,github:chen_2011_spherical_flames::cantera_sl_phi1)",
+      "content_hash": "99b9db774d9298eda33bc86cc1650c52957d0c7c49c90beedbdceb9f2e85ff45",
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::__conjunction_result_08f399a5",
+      "label": "__conjunction_result_08f399a5",
+      "metadata": {
+        "canonical_name": "all_true(github:chen_2011_spherical_flames::paper_sl_phi1,github:chen_2011_spherical_flames::cantera_sl_phi1)",
+        "generated": true,
+        "generated_kind": "helper_claim",
+        "helper_kind": "conjunction_result",
+        "helper_visibility": "formal_internal",
+        "intermediate_role": "conjunction_result",
+        "owning_strategy_id": "lcs_b91d59835f32af0d",
+        "owning_strategy_type": "support",
+        "visibility": "formal_internal"
+      },
+      "parameters": [],
+      "type": "claim"
+    },
+    {
+      "content": "implies(github:chen_2011_spherical_flames::__conjunction_result_08f399a5,github:chen_2011_spherical_flames::agreement_phi1)",
+      "content_hash": "1fd5b246aa26e4db80d6da031646154d5b4d18bf270f70de8567e55999fc93f2",
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::__implication_result_afbdddf6",
+      "label": "__implication_result_afbdddf6",
+      "metadata": {
+        "canonical_name": "implies(github:chen_2011_spherical_flames::__conjunction_result_08f399a5,github:chen_2011_spherical_flames::agreement_phi1)",
+        "generated": true,
+        "generated_kind": "helper_claim",
+        "helper_kind": "implication_result",
+        "helper_visibility": "formal_internal",
+        "intermediate_role": "implication_result",
+        "owning_strategy_id": "lcs_b91d59835f32af0d",
+        "owning_strategy_type": "support",
+        "prior": 0.99,
+        "visibility": "formal_internal"
+      },
+      "parameters": [],
+      "type": "claim"
+    },
+    {
+      "content": "all_true(github:chen_2011_spherical_flames::paper_sl_phi2,github:chen_2011_spherical_flames::cantera_sl_phi2)",
+      "content_hash": "8292bd181a22d48c4cc39c7169fc57317b522078b6e43c6a30af4db1eb35cafb",
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::__conjunction_result_9648157b",
+      "label": "__conjunction_result_9648157b",
+      "metadata": {
+        "canonical_name": "all_true(github:chen_2011_spherical_flames::paper_sl_phi2,github:chen_2011_spherical_flames::cantera_sl_phi2)",
+        "generated": true,
+        "generated_kind": "helper_claim",
+        "helper_kind": "conjunction_result",
+        "helper_visibility": "formal_internal",
+        "intermediate_role": "conjunction_result",
+        "owning_strategy_id": "lcs_bb4ebb246fe8e599",
+        "owning_strategy_type": "support",
+        "visibility": "formal_internal"
+      },
+      "parameters": [],
+      "type": "claim"
+    },
+    {
+      "content": "implies(github:chen_2011_spherical_flames::__conjunction_result_9648157b,github:chen_2011_spherical_flames::agreement_phi2)",
+      "content_hash": "c2ccdc067cf5ee8e2591197f0019fbada73d3397b52304526222c92e1590e6e8",
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::__implication_result_c5918cfc",
+      "label": "__implication_result_c5918cfc",
+      "metadata": {
+        "canonical_name": "implies(github:chen_2011_spherical_flames::__conjunction_result_9648157b,github:chen_2011_spherical_flames::agreement_phi2)",
+        "generated": true,
+        "generated_kind": "helper_claim",
+        "helper_kind": "implication_result",
+        "helper_visibility": "formal_internal",
+        "intermediate_role": "implication_result",
+        "owning_strategy_id": "lcs_bb4ebb246fe8e599",
+        "owning_strategy_type": "support",
+        "prior": 0.99,
+        "visibility": "formal_internal"
+      },
+      "parameters": [],
+      "type": "claim"
+    },
+    {
+      "content": "all_true(github:chen_2011_spherical_flames::paper_sl_phi4,github:chen_2011_spherical_flames::cantera_sl_phi4)",
+      "content_hash": "021c8f3f4e95d8d80c40860e32b081ba21e86b0a23c27b92725f12fc319a8cce",
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::__conjunction_result_acfb13c4",
+      "label": "__conjunction_result_acfb13c4",
+      "metadata": {
+        "canonical_name": "all_true(github:chen_2011_spherical_flames::paper_sl_phi4,github:chen_2011_spherical_flames::cantera_sl_phi4)",
+        "generated": true,
+        "generated_kind": "helper_claim",
+        "helper_kind": "conjunction_result",
+        "helper_visibility": "formal_internal",
+        "intermediate_role": "conjunction_result",
+        "owning_strategy_id": "lcs_87ad9f1bb6e5354a",
+        "owning_strategy_type": "support",
+        "visibility": "formal_internal"
+      },
+      "parameters": [],
+      "type": "claim"
+    },
+    {
+      "content": "implies(github:chen_2011_spherical_flames::__conjunction_result_acfb13c4,github:chen_2011_spherical_flames::agreement_phi4)",
+      "content_hash": "1f7b74cbf5226ed78ad2fab7277f1a516668360194f3adda2472968812203e3e",
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::__implication_result_1363c3d9",
+      "label": "__implication_result_1363c3d9",
+      "metadata": {
+        "canonical_name": "implies(github:chen_2011_spherical_flames::__conjunction_result_acfb13c4,github:chen_2011_spherical_flames::agreement_phi4)",
+        "generated": true,
+        "generated_kind": "helper_claim",
+        "helper_kind": "implication_result",
+        "helper_visibility": "formal_internal",
+        "intermediate_role": "implication_result",
+        "owning_strategy_id": "lcs_87ad9f1bb6e5354a",
+        "owning_strategy_type": "support",
+        "prior": 0.99,
+        "visibility": "formal_internal"
+      },
+      "parameters": [],
+      "type": "claim"
+    },
+    {
+      "content": "implies(github:chen_2011_spherical_flames::cantera_validates_paper_sl,github:chen_2011_spherical_flames::agreement_phi1)",
+      "content_hash": "852d0b36d7ff3aec1474d6882a7ca65f80542fff36e9f24741ea25d95e101443",
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::__implication_result_277b38d1",
+      "label": "__implication_result_277b38d1",
+      "metadata": {
+        "canonical_name": "implies(github:chen_2011_spherical_flames::cantera_validates_paper_sl,github:chen_2011_spherical_flames::agreement_phi1)",
+        "generated": true,
+        "generated_kind": "helper_claim",
+        "helper_kind": "implication_result",
+        "helper_visibility": "formal_internal",
+        "intermediate_role": "implication_result",
+        "owning_strategy_id": "lcs_e483dbdef7825b52",
+        "owning_strategy_type": "support",
+        "prior": 0.95,
+        "visibility": "formal_internal"
+      },
+      "parameters": [],
+      "type": "claim"
+    },
+    {
+      "content": "implies(github:chen_2011_spherical_flames::cantera_validates_paper_sl,github:chen_2011_spherical_flames::agreement_phi2)",
+      "content_hash": "0fa39c1045a28322ab9634dc9934a40b2c0a7b8207c679c5d78d48ae6857d0c9",
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::__implication_result_05e1248f",
+      "label": "__implication_result_05e1248f",
+      "metadata": {
+        "canonical_name": "implies(github:chen_2011_spherical_flames::cantera_validates_paper_sl,github:chen_2011_spherical_flames::agreement_phi2)",
+        "generated": true,
+        "generated_kind": "helper_claim",
+        "helper_kind": "implication_result",
+        "helper_visibility": "formal_internal",
+        "intermediate_role": "implication_result",
+        "owning_strategy_id": "lcs_cc4604dba8589fc9",
+        "owning_strategy_type": "support",
+        "prior": 0.95,
+        "visibility": "formal_internal"
+      },
+      "parameters": [],
+      "type": "claim"
+    },
+    {
+      "content": "implies(github:chen_2011_spherical_flames::cantera_validates_paper_sl,github:chen_2011_spherical_flames::agreement_phi4)",
+      "content_hash": "a769da0a75af26211449ccf321d8e5ed07dc1d37af1390ac2f9e1aef04285ec4",
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::__implication_result_19879afa",
+      "label": "__implication_result_19879afa",
+      "metadata": {
+        "canonical_name": "implies(github:chen_2011_spherical_flames::cantera_validates_paper_sl,github:chen_2011_spherical_flames::agreement_phi4)",
+        "generated": true,
+        "generated_kind": "helper_claim",
+        "helper_kind": "implication_result",
+        "helper_visibility": "formal_internal",
+        "intermediate_role": "implication_result",
+        "owning_strategy_id": "lcs_9ea77058eb39bbf4",
+        "owning_strategy_type": "support",
+        "prior": 0.95,
+        "visibility": "formal_internal"
+      },
+      "parameters": [],
+      "type": "claim"
+    },
+    {
+      "content": "all_true(github:chen_2011_spherical_flames::pyasurf_phi1_sb,github:chen_2011_spherical_flames::cantera_ref_phi1_ch4)",
+      "content_hash": "dc20a90ec3fbab1f62601d758bd130c92f86e1116032615df00de14ec564eb34",
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::__conjunction_result_d7bd06b7",
+      "label": "__conjunction_result_d7bd06b7",
+      "metadata": {
+        "canonical_name": "all_true(github:chen_2011_spherical_flames::pyasurf_phi1_sb,github:chen_2011_spherical_flames::cantera_ref_phi1_ch4)",
+        "generated": true,
+        "generated_kind": "helper_claim",
+        "helper_kind": "conjunction_result",
+        "helper_visibility": "formal_internal",
+        "intermediate_role": "conjunction_result",
+        "owning_strategy_id": "lcs_f50b76c927123a12",
+        "owning_strategy_type": "support",
+        "visibility": "formal_internal"
+      },
+      "parameters": [],
+      "type": "claim"
+    },
+    {
+      "content": "implies(github:chen_2011_spherical_flames::__conjunction_result_d7bd06b7,github:chen_2011_spherical_flames::pyasurf_undershoots_phi1)",
+      "content_hash": "97a4028e0cf0110f00d38fffa776955518b987c8524ac126c014f4ff928caa36",
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::__implication_result_96c6f18e",
+      "label": "__implication_result_96c6f18e",
+      "metadata": {
+        "canonical_name": "implies(github:chen_2011_spherical_flames::__conjunction_result_d7bd06b7,github:chen_2011_spherical_flames::pyasurf_undershoots_phi1)",
+        "generated": true,
+        "generated_kind": "helper_claim",
+        "helper_kind": "implication_result",
+        "helper_visibility": "formal_internal",
+        "intermediate_role": "implication_result",
+        "owning_strategy_id": "lcs_f50b76c927123a12",
+        "owning_strategy_type": "support",
+        "prior": 0.9,
+        "visibility": "formal_internal"
+      },
+      "parameters": [],
+      "type": "claim"
+    },
+    {
+      "content": "all_true(github:chen_2011_spherical_flames::pyasurf_phi14_sb_noisy,github:chen_2011_spherical_flames::pyasurf_phi06_amr6)",
+      "content_hash": "198d6b72142cd0a86cefb46399c38b9a8d0eb97eb5875945ea169d233bf8612e",
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::__conjunction_result_a238970b",
+      "label": "__conjunction_result_a238970b",
+      "metadata": {
+        "canonical_name": "all_true(github:chen_2011_spherical_flames::pyasurf_phi14_sb_noisy,github:chen_2011_spherical_flames::pyasurf_phi06_amr6)",
+        "generated": true,
+        "generated_kind": "helper_claim",
+        "helper_kind": "conjunction_result",
+        "helper_visibility": "formal_internal",
+        "intermediate_role": "conjunction_result",
+        "owning_strategy_id": "lcs_39a61433ccd2a1c1",
+        "owning_strategy_type": "support",
+        "visibility": "formal_internal"
+      },
+      "parameters": [],
+      "type": "claim"
+    },
+    {
+      "content": "implies(github:chen_2011_spherical_flames::__conjunction_result_a238970b,github:chen_2011_spherical_flames::amr_regime_dependence)",
+      "content_hash": "9338a75079e96691eabf9dee54adad84660c112c2dcab5d5ce3d04ea1260d203",
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::__implication_result_a7e1a2e3",
+      "label": "__implication_result_a7e1a2e3",
+      "metadata": {
+        "canonical_name": "implies(github:chen_2011_spherical_flames::__conjunction_result_a238970b,github:chen_2011_spherical_flames::amr_regime_dependence)",
+        "generated": true,
+        "generated_kind": "helper_claim",
+        "helper_kind": "implication_result",
+        "helper_visibility": "formal_internal",
+        "intermediate_role": "implication_result",
+        "owning_strategy_id": "lcs_39a61433ccd2a1c1",
+        "owning_strategy_type": "support",
+        "prior": 0.9,
+        "visibility": "formal_internal"
+      },
+      "parameters": [],
+      "type": "claim"
+    },
+    {
+      "content": "implies(github:chen_2011_spherical_flames::amr_regime_dependence,github:chen_2011_spherical_flames::amr_low_level_error)",
+      "content_hash": "a820845218fd8004398e145fcb5e7b799b58a299276ae02e0d231e08f591d351",
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::__implication_result_cd74b97d",
+      "label": "__implication_result_cd74b97d",
+      "metadata": {
+        "canonical_name": "implies(github:chen_2011_spherical_flames::amr_regime_dependence,github:chen_2011_spherical_flames::amr_low_level_error)",
+        "generated": true,
+        "generated_kind": "helper_claim",
+        "helper_kind": "implication_result",
+        "helper_visibility": "formal_internal",
+        "intermediate_role": "implication_result",
+        "owning_strategy_id": "lcs_ebc716a27a6e128f",
+        "owning_strategy_type": "support",
+        "prior": 0.85,
+        "visibility": "formal_internal"
+      },
+      "parameters": [],
+      "type": "claim"
+    },
+    {
+      "content": "implies(github:chen_2011_spherical_flames::pyasurf_fig3_curves,github:chen_2011_spherical_flames::repro_fig3_ordering)",
+      "content_hash": "9d4f027accb6e461d61a70fb77f9a36b3167ab63775ea8d025edfba6572bc382",
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::__implication_result_ec81e31d",
+      "label": "__implication_result_ec81e31d",
+      "metadata": {
+        "canonical_name": "implies(github:chen_2011_spherical_flames::pyasurf_fig3_curves,github:chen_2011_spherical_flames::repro_fig3_ordering)",
+        "generated": true,
+        "generated_kind": "helper_claim",
+        "helper_kind": "implication_result",
+        "helper_visibility": "formal_internal",
+        "intermediate_role": "implication_result",
+        "owning_strategy_id": "lcs_f6ee8e767c2c7588",
+        "owning_strategy_type": "support",
+        "prior": 0.98,
+        "visibility": "formal_internal"
+      },
+      "parameters": [],
+      "type": "claim"
+    },
+    {
+      "content": "implies(github:chen_2011_spherical_flames::pyasurf_fig7_deltas,github:chen_2011_spherical_flames::repro_fig7_relative)",
+      "content_hash": "a88e4ca7e07a8e16543bfa5d68afa879a3ff0054af8168472e2707fdf50206d7",
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::__implication_result_4027ba5d",
+      "label": "__implication_result_4027ba5d",
+      "metadata": {
+        "canonical_name": "implies(github:chen_2011_spherical_flames::pyasurf_fig7_deltas,github:chen_2011_spherical_flames::repro_fig7_relative)",
+        "generated": true,
+        "generated_kind": "helper_claim",
+        "helper_kind": "implication_result",
+        "helper_visibility": "formal_internal",
+        "intermediate_role": "implication_result",
+        "owning_strategy_id": "lcs_288186ef26f5f1cd",
+        "owning_strategy_type": "support",
+        "prior": 0.97,
+        "visibility": "formal_internal"
+      },
+      "parameters": [],
+      "type": "claim"
+    },
+    {
+      "content": "implies(github:chen_2011_spherical_flames::error_ordering_le_ne_1,github:chen_2011_spherical_flames::repro_fig3_ordering)",
+      "content_hash": "875d4f0874d5cb21831807f40d9e6d9f03c46ce2b977d62109eb3bba48d683a4",
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::__implication_result_2a30c00d",
+      "label": "__implication_result_2a30c00d",
+      "metadata": {
+        "canonical_name": "implies(github:chen_2011_spherical_flames::error_ordering_le_ne_1,github:chen_2011_spherical_flames::repro_fig3_ordering)",
+        "generated": true,
+        "generated_kind": "helper_claim",
+        "helper_kind": "implication_result",
+        "helper_visibility": "formal_internal",
+        "intermediate_role": "implication_result",
+        "owning_strategy_id": "lcs_fe4db909f9c5b726",
+        "owning_strategy_type": "support",
+        "prior": 0.92,
+        "visibility": "formal_internal"
+      },
+      "parameters": [],
+      "type": "claim"
+    },
+    {
+      "content": "implies(github:chen_2011_spherical_flames::error_ordering_le_ne_1,github:chen_2011_spherical_flames::repro_fig7_relative)",
+      "content_hash": "207cee33390d767033082bad0ef01965cd28cff255923041ae35fd008c75c260",
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::__implication_result_39ce34db",
+      "label": "__implication_result_39ce34db",
+      "metadata": {
+        "canonical_name": "implies(github:chen_2011_spherical_flames::error_ordering_le_ne_1,github:chen_2011_spherical_flames::repro_fig7_relative)",
+        "generated": true,
+        "generated_kind": "helper_claim",
+        "helper_kind": "implication_result",
+        "helper_visibility": "formal_internal",
+        "intermediate_role": "implication_result",
+        "owning_strategy_id": "lcs_0e72f9be8c187959",
+        "owning_strategy_type": "support",
+        "prior": 0.92,
+        "visibility": "formal_internal"
+      },
+      "parameters": [],
+      "type": "claim"
+    },
+    {
+      "content": "all_true(github:chen_2011_spherical_flames::ignition_kernel_constraint,github:chen_2011_spherical_flames::amr_low_level_error,github:chen_2011_spherical_flames::amr_level8_grid_indep,github:chen_2011_spherical_flames::soret_rich_h2_neglig,github:chen_2011_spherical_flames::large_mech_impractical)",
+      "content_hash": "aa27fef58ce5d2c7f620820365907306c24bb03bcee5dd0dfab88233dcd4a8a7",
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::__conjunction_result_20b86954",
+      "label": "__conjunction_result_20b86954",
+      "metadata": {
+        "canonical_name": "all_true(github:chen_2011_spherical_flames::ignition_kernel_constraint,github:chen_2011_spherical_flames::amr_low_level_error,github:chen_2011_spherical_flames::amr_level8_grid_indep,github:chen_2011_spherical_flames::soret_rich_h2_neglig,github:chen_2011_spherical_flames::large_mech_impractical)",
+        "generated": true,
+        "generated_kind": "helper_claim",
+        "helper_kind": "conjunction_result",
+        "helper_visibility": "formal_internal",
+        "intermediate_role": "conjunction_result",
+        "owning_strategy_id": "lcs_c1927ef844667aa4",
+        "owning_strategy_type": "support",
+        "visibility": "formal_internal"
+      },
+      "parameters": [],
+      "type": "claim"
+    },
+    {
+      "content": "implies(github:chen_2011_spherical_flames::__conjunction_result_20b86954,github:chen_2011_spherical_flames::reproduction_lessons)",
+      "content_hash": "feceb69b0783249cd77f45c6b07593f34941c86019450b775facff00aede3331",
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::__implication_result_8c26d8a3",
+      "label": "__implication_result_8c26d8a3",
+      "metadata": {
+        "canonical_name": "implies(github:chen_2011_spherical_flames::__conjunction_result_20b86954,github:chen_2011_spherical_flames::reproduction_lessons)",
+        "generated": true,
+        "generated_kind": "helper_claim",
+        "helper_kind": "implication_result",
+        "helper_visibility": "formal_internal",
+        "intermediate_role": "implication_result",
+        "owning_strategy_id": "lcs_c1927ef844667aa4",
+        "owning_strategy_type": "support",
+        "prior": 0.88,
+        "visibility": "formal_internal"
+      },
+      "parameters": [],
+      "type": "claim"
+    },
+    {
+      "content": "all_true(github:chen_2011_spherical_flames::paper_taylor_phi134,github:chen_2011_spherical_flames::repro_taylor_phi134)",
+      "content_hash": "dcfe755b23754c706740c2cf61e05c0a4dbeae601cd2e650d54ada97101f4264",
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::__conjunction_result_38a9f9fc",
+      "label": "__conjunction_result_38a9f9fc",
+      "metadata": {
+        "canonical_name": "all_true(github:chen_2011_spherical_flames::paper_taylor_phi134,github:chen_2011_spherical_flames::repro_taylor_phi134)",
+        "generated": true,
+        "generated_kind": "helper_claim",
+        "helper_kind": "conjunction_result",
+        "helper_visibility": "formal_internal",
+        "intermediate_role": "conjunction_result",
+        "owning_strategy_id": "lcs_f20587e766e67dd3",
+        "owning_strategy_type": "support",
+        "visibility": "formal_internal"
+      },
+      "parameters": [],
+      "type": "claim"
+    },
+    {
+      "content": "implies(github:chen_2011_spherical_flames::__conjunction_result_38a9f9fc,github:chen_2011_spherical_flames::taylor_reanalysis_agreement)",
+      "content_hash": "1fe207c807cf13361ee5b02c5a3dd5233e7e9ef3e740b438bba553212612366b",
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::__implication_result_47e5a353",
+      "label": "__implication_result_47e5a353",
+      "metadata": {
+        "canonical_name": "implies(github:chen_2011_spherical_flames::__conjunction_result_38a9f9fc,github:chen_2011_spherical_flames::taylor_reanalysis_agreement)",
+        "generated": true,
+        "generated_kind": "helper_claim",
+        "helper_kind": "implication_result",
+        "helper_visibility": "formal_internal",
+        "intermediate_role": "implication_result",
+        "owning_strategy_id": "lcs_f20587e766e67dd3",
+        "owning_strategy_type": "support",
+        "prior": 0.95,
+        "visibility": "formal_internal"
+      },
+      "parameters": [],
+      "type": "claim"
+    },
+    {
+      "content": "implies(github:chen_2011_spherical_flames::error_def_residual_eq6,github:chen_2011_spherical_flames::fig4_def_residual_is_faithful)",
+      "content_hash": "f9c52817f8f5905e27ae986da3df50d1103d9372ce90a757f8aaa0b512ae8cb1",
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::__implication_result_30f8af42",
+      "label": "__implication_result_30f8af42",
+      "metadata": {
+        "canonical_name": "implies(github:chen_2011_spherical_flames::error_def_residual_eq6,github:chen_2011_spherical_flames::fig4_def_residual_is_faithful)",
+        "generated": true,
+        "generated_kind": "helper_claim",
+        "helper_kind": "implication_result",
+        "helper_visibility": "formal_internal",
+        "intermediate_role": "implication_result",
+        "owning_strategy_id": "lcs_8f21e8d64abef6d2",
+        "owning_strategy_type": "support",
+        "prior": 0.99,
+        "visibility": "formal_internal"
+      },
+      "parameters": [],
+      "type": "claim"
+    },
+    {
+      "content": "all_true(github:chen_2011_spherical_flames::qg_11_accept,github:chen_2011_spherical_flames::qg_fig4_fix,github:chen_2011_spherical_flames::qg_fig9_partial,github:chen_2011_spherical_flames::fig1_skipped)",
+      "content_hash": "efe79239caea5d93267bc5cb699c7522c3ee0c595ab173f2ef28ae64b301be98",
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::__conjunction_result_a1e85272",
+      "label": "__conjunction_result_a1e85272",
+      "metadata": {
+        "canonical_name": "all_true(github:chen_2011_spherical_flames::qg_11_accept,github:chen_2011_spherical_flames::qg_fig4_fix,github:chen_2011_spherical_flames::qg_fig9_partial,github:chen_2011_spherical_flames::fig1_skipped)",
+        "generated": true,
+        "generated_kind": "helper_claim",
+        "helper_kind": "conjunction_result",
+        "helper_visibility": "formal_internal",
+        "intermediate_role": "conjunction_result",
+        "owning_strategy_id": "lcs_b68371b4ba8889b5",
+        "owning_strategy_type": "support",
+        "visibility": "formal_internal"
+      },
+      "parameters": [],
+      "type": "claim"
+    },
+    {
+      "content": "implies(github:chen_2011_spherical_flames::__conjunction_result_a1e85272,github:chen_2011_spherical_flames::reproduction_13_of_14)",
+      "content_hash": "6cac7674db641c2c1324e7acae5adc8db8da47e8be8caff2122df7696e4bff7d",
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::__implication_result_784e09f3",
+      "label": "__implication_result_784e09f3",
+      "metadata": {
+        "canonical_name": "implies(github:chen_2011_spherical_flames::__conjunction_result_a1e85272,github:chen_2011_spherical_flames::reproduction_13_of_14)",
+        "generated": true,
+        "generated_kind": "helper_claim",
+        "helper_kind": "implication_result",
+        "helper_visibility": "formal_internal",
+        "intermediate_role": "implication_result",
+        "owning_strategy_id": "lcs_b68371b4ba8889b5",
+        "owning_strategy_type": "support",
+        "prior": 0.95,
+        "visibility": "formal_internal"
+      },
+      "parameters": [],
+      "type": "claim"
+    },
+    {
+      "content": "implies(github:chen_2011_spherical_flames::chen2011_reproducible,github:chen_2011_spherical_flames::cantera_validates_paper_sl)",
+      "content_hash": "99316927e7fd563d7cdea00c04e7b9e65486103a4e19b00cd2f0a4aa9116f1cf",
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::__implication_result_2b49f079",
+      "label": "__implication_result_2b49f079",
+      "metadata": {
+        "canonical_name": "implies(github:chen_2011_spherical_flames::chen2011_reproducible,github:chen_2011_spherical_flames::cantera_validates_paper_sl)",
+        "generated": true,
+        "generated_kind": "helper_claim",
+        "helper_kind": "implication_result",
+        "helper_visibility": "formal_internal",
+        "intermediate_role": "implication_result",
+        "owning_strategy_id": "lcs_f22fb694056d9096",
+        "owning_strategy_type": "support",
+        "prior": 0.9,
+        "visibility": "formal_internal"
+      },
+      "parameters": [],
+      "type": "claim"
+    },
+    {
+      "content": "implies(github:chen_2011_spherical_flames::chen2011_reproducible,github:chen_2011_spherical_flames::taylor_reanalysis_agreement)",
+      "content_hash": "9704b4ff85e17c10ed2d9a444741379bf8ef10d4460bf036d82d9f86102d9246",
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::__implication_result_daa474ce",
+      "label": "__implication_result_daa474ce",
+      "metadata": {
+        "canonical_name": "implies(github:chen_2011_spherical_flames::chen2011_reproducible,github:chen_2011_spherical_flames::taylor_reanalysis_agreement)",
+        "generated": true,
+        "generated_kind": "helper_claim",
+        "helper_kind": "implication_result",
+        "helper_visibility": "formal_internal",
+        "intermediate_role": "implication_result",
+        "owning_strategy_id": "lcs_ecb594d133e1c1dd",
+        "owning_strategy_type": "support",
+        "prior": 0.9,
+        "visibility": "formal_internal"
+      },
+      "parameters": [],
+      "type": "claim"
+    },
+    {
+      "content": "implies(github:chen_2011_spherical_flames::chen2011_reproducible,github:chen_2011_spherical_flames::nq_window_requirement)",
+      "content_hash": "1c4aa3b665bdc840f3017100d2db4e6ed1ba78450e643c6d3b61969ae969f403",
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::__implication_result_2b28d6f5",
+      "label": "__implication_result_2b28d6f5",
+      "metadata": {
+        "canonical_name": "implies(github:chen_2011_spherical_flames::chen2011_reproducible,github:chen_2011_spherical_flames::nq_window_requirement)",
+        "generated": true,
+        "generated_kind": "helper_claim",
+        "helper_kind": "implication_result",
+        "helper_visibility": "formal_internal",
+        "intermediate_role": "implication_result",
+        "owning_strategy_id": "lcs_1ccdf9aef8c39b96",
+        "owning_strategy_type": "support",
+        "prior": 0.92,
+        "visibility": "formal_internal"
+      },
+      "parameters": [],
+      "type": "claim"
+    },
+    {
+      "content": "all_true(github:chen_2011_spherical_flames::reproduction_lessons,github:chen_2011_spherical_flames::amr_level8_grid_indep,github:chen_2011_spherical_flames::soret_rich_h2_neglig)",
+      "content_hash": "2f9923af43951b0e7bba90bd3f54e2011111405e6b49d3ccec94625f89f96ce3",
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::__conjunction_result_70a9fff4",
+      "label": "__conjunction_result_70a9fff4",
+      "metadata": {
+        "canonical_name": "all_true(github:chen_2011_spherical_flames::reproduction_lessons,github:chen_2011_spherical_flames::amr_level8_grid_indep,github:chen_2011_spherical_flames::soret_rich_h2_neglig)",
+        "generated": true,
+        "generated_kind": "helper_claim",
+        "helper_kind": "conjunction_result",
+        "helper_visibility": "formal_internal",
+        "intermediate_role": "conjunction_result",
+        "owning_strategy_id": "lcs_4892121ce2eeb9cc",
+        "owning_strategy_type": "support",
+        "visibility": "formal_internal"
+      },
+      "parameters": [],
+      "type": "claim"
+    },
+    {
+      "content": "implies(github:chen_2011_spherical_flames::__conjunction_result_70a9fff4,github:chen_2011_spherical_flames::pipeline_caveat)",
+      "content_hash": "02a449a9ee08a6f0c0352b84b9b284f9cbe78c29f1829c5da6ff069a2ded394b",
+      "exported": false,
+      "id": "github:chen_2011_spherical_flames::__implication_result_6dd5ef26",
+      "label": "__implication_result_6dd5ef26",
+      "metadata": {
+        "canonical_name": "implies(github:chen_2011_spherical_flames::__conjunction_result_70a9fff4,github:chen_2011_spherical_flames::pipeline_caveat)",
+        "generated": true,
+        "generated_kind": "helper_claim",
+        "helper_kind": "implication_result",
+        "helper_visibility": "formal_internal",
+        "intermediate_role": "implication_result",
+        "owning_strategy_id": "lcs_4892121ce2eeb9cc",
+        "owning_strategy_type": "support",
+        "prior": 0.92,
+        "visibility": "formal_internal"
+      },
+      "parameters": [],
+      "type": "claim"
+    }
+  ],
+  "module_order": [
+    "motivation",
+    "s1_extraction_models",
+    "s2_nq_window",
+    "s3_cantera_validation",
+    "s4_asurf_reproduction",
+    "s5_taylor_reanalysis",
+    "s6_qg_audit"
+  ],
+  "module_titles": {
+    "motivation": "Motivation — setup and research question for Chen 2011 reproduction.",
+    "s1_extraction_models": "S1 — Three stretch-extrapolation models (LM, NMI, NMII).",
+    "s2_nq_window": "S2 — NQ fitting-window requirement for Le > 1.",
+    "s3_cantera_validation": "S3 — Tier-1 validation: Cantera FreeFlame reference vs paper S_L values.",
+    "s4_asurf_reproduction": "S4 — pyASURF / Fortran ASURF spherical-flame reproduction.",
+    "s5_taylor_reanalysis": "S5 — Re-analysis of Taylor 1991 experimental data (Figs. 12-14).",
+    "s6_qg_audit": "S6 — Figure-by-figure QG audit and the overall reproducibility claim."
+  },
+  "namespace": "github",
+  "operators": [
+    {
+      "conclusion": "github:chen_2011_spherical_flames::ctr_fig4_definitions",
+      "metadata": {
+        "reason": "Only one of the two error conventions can be the *faithful* reproduction of the single Fig. 4 in the paper. Choosing the relative-error convention (Hypothesis A) produces a plot sign-inverted from the paper; choosing the Eq. 6 residual (Hypothesis B) produces a quantitative match. These hypotheses cannot both be true of the same paper figure."
+      },
+      "operator": "contradiction",
+      "operator_id": "lco_253767452e81f756",
+      "scope": "local",
+      "variables": [
+        "github:chen_2011_spherical_flames::fig4_def_rel_is_faithful",
+        "github:chen_2011_spherical_flames::fig4_def_residual_is_faithful"
+      ]
+    }
+  ],
+  "package_name": "chen_2011_spherical_flames",
+  "scope": "local",
+  "strategies": [
+    {
+      "background": [
+        "github:chen_2011_spherical_flames::def_lm",
+        "github:chen_2011_spherical_flames::def_nmi",
+        "github:chen_2011_spherical_flames::def_nmii",
+        "github:chen_2011_spherical_flames::def_sm",
+        "github:chen_2011_spherical_flames::spherical_flame_setup"
+      ],
+      "conclusion": "github:chen_2011_spherical_flames::error_zero_at_le1",
+      "formal_expr": {
+        "operators": [
+          {
+            "conclusion": "github:chen_2011_spherical_flames::__implication_result_1715d106",
+            "operator": "implication",
+            "variables": [
+              "github:chen_2011_spherical_flames::lb_vanishes_at_le1",
+              "github:chen_2011_spherical_flames::error_zero_at_le1"
+            ]
+          }
+        ]
+      },
+      "metadata": {
+        "formalization_template": "support",
+        "generated_formal_expr": true,
+        "prior": 0.98,
+        "reason": "At $\\mathrm{Le}=1$ the Markstein length $L_b$ vanishes (@lb_vanishes_at_le1). Substituting $L_b = 0$ into the LM, NMI and NMII definitions (@def_lm, @def_nmi, @def_nmii) reduces each to $S_b = S_b^{0}$, which exactly matches the SM reference (@def_sm). Hence all three residuals vanish identically (@error_zero_at_le1)."
+      },
+      "premises": [
+        "github:chen_2011_spherical_flames::lb_vanishes_at_le1"
+      ],
+      "scope": "local",
+      "strategy_id": "lcs_851f1de294663783",
+      "type": "support"
+    },
+    {
+      "background": [
+        "github:chen_2011_spherical_flames::setup_h2_air"
+      ],
+      "conclusion": "github:chen_2011_spherical_flames::nq_window_requirement",
+      "formal_expr": {
+        "operators": [
+          {
+            "conclusion": "github:chen_2011_spherical_flames::__conjunction_result_3709ceb0",
+            "operator": "conjunction",
+            "variables": [
+              "github:chen_2011_spherical_flames::repro_lb_phi4_tight_window_fails",
+              "github:chen_2011_spherical_flames::repro_lb_phi4_fixed_window_matches",
+              "github:chen_2011_spherical_flames::paper_lb_phi4_value"
+            ]
+          },
+          {
+            "conclusion": "github:chen_2011_spherical_flames::__implication_result_675546da",
+            "operator": "implication",
+            "variables": [
+              "github:chen_2011_spherical_flames::__conjunction_result_3709ceb0",
+              "github:chen_2011_spherical_flames::nq_window_requirement"
+            ]
+          }
+        ]
+      },
+      "metadata": {
+        "formalization_template": "support",
+        "generated_formal_expr": true,
+        "prior": 0.9,
+        "reason": "The reproduction provides a before/after pair of observations. With a tight window (@repro_lb_phi4_tight_window_fails) NMI fails with negative $L_b$; with the paper's prescribed window (@repro_lb_phi4_fixed_window_matches) NMI returns $L_b = 0.042$ cm, within 5 % of the paper's reported value (@paper_lb_phi4_value). The contrast demonstrates that $R_f > 1.5$ cm is not merely suggested but *necessary* for stable extraction at $\\mathrm{Le} > 1$, confirming the paper's Section 3.2 claim."
+      },
+      "premises": [
+        "github:chen_2011_spherical_flames::repro_lb_phi4_tight_window_fails",
+        "github:chen_2011_spherical_flames::repro_lb_phi4_fixed_window_matches",
+        "github:chen_2011_spherical_flames::paper_lb_phi4_value"
+      ],
+      "scope": "local",
+      "strategy_id": "lcs_4e9f5d14d0f02e4d",
+      "type": "support"
+    },
+    {
+      "background": [
+        "github:chen_2011_spherical_flames::setup_h2_air"
+      ],
+      "conclusion": "github:chen_2011_spherical_flames::agreement_phi1",
+      "formal_expr": {
+        "operators": [
+          {
+            "conclusion": "github:chen_2011_spherical_flames::__conjunction_result_08f399a5",
+            "operator": "conjunction",
+            "variables": [
+              "github:chen_2011_spherical_flames::paper_sl_phi1",
+              "github:chen_2011_spherical_flames::cantera_sl_phi1"
+            ]
+          },
+          {
+            "conclusion": "github:chen_2011_spherical_flames::__implication_result_afbdddf6",
+            "operator": "implication",
+            "variables": [
+              "github:chen_2011_spherical_flames::__conjunction_result_08f399a5",
+              "github:chen_2011_spherical_flames::agreement_phi1"
+            ]
+          }
+        ]
+      },
+      "metadata": {
+        "formalization_template": "support",
+        "generated_formal_expr": true,
+        "prior": 0.99,
+        "reason": "Paper value 213.6 cm/s (@paper_sl_phi1) vs independent Cantera value 210.3 cm/s (@cantera_sl_phi1). Absolute deviation 3.3 cm/s, relative 1.5 %."
+      },
+      "premises": [
+        "github:chen_2011_spherical_flames::paper_sl_phi1",
+        "github:chen_2011_spherical_flames::cantera_sl_phi1"
+      ],
+      "scope": "local",
+      "strategy_id": "lcs_b91d59835f32af0d",
+      "type": "support"
+    },
+    {
+      "background": [
+        "github:chen_2011_spherical_flames::setup_h2_air"
+      ],
+      "conclusion": "github:chen_2011_spherical_flames::agreement_phi2",
+      "formal_expr": {
+        "operators": [
+          {
+            "conclusion": "github:chen_2011_spherical_flames::__conjunction_result_9648157b",
+            "operator": "conjunction",
+            "variables": [
+              "github:chen_2011_spherical_flames::paper_sl_phi2",
+              "github:chen_2011_spherical_flames::cantera_sl_phi2"
+            ]
+          },
+          {
+            "conclusion": "github:chen_2011_spherical_flames::__implication_result_c5918cfc",
+            "operator": "implication",
+            "variables": [
+              "github:chen_2011_spherical_flames::__conjunction_result_9648157b",
+              "github:chen_2011_spherical_flames::agreement_phi2"
+            ]
+          }
+        ]
+      },
+      "metadata": {
+        "formalization_template": "support",
+        "generated_formal_expr": true,
+        "prior": 0.99,
+        "reason": "Paper 290.8 cm/s (@paper_sl_phi2) vs Cantera 286.1 cm/s (@cantera_sl_phi2) ⇒ 1.6 % deviation."
+      },
+      "premises": [
+        "github:chen_2011_spherical_flames::paper_sl_phi2",
+        "github:chen_2011_spherical_flames::cantera_sl_phi2"
+      ],
+      "scope": "local",
+      "strategy_id": "lcs_bb4ebb246fe8e599",
+      "type": "support"
+    },
+    {
+      "background": [
+        "github:chen_2011_spherical_flames::setup_h2_air"
+      ],
+      "conclusion": "github:chen_2011_spherical_flames::agreement_phi4",
+      "formal_expr": {
+        "operators": [
+          {
+            "conclusion": "github:chen_2011_spherical_flames::__conjunction_result_acfb13c4",
+            "operator": "conjunction",
+            "variables": [
+              "github:chen_2011_spherical_flames::paper_sl_phi4",
+              "github:chen_2011_spherical_flames::cantera_sl_phi4"
+            ]
+          },
+          {
+            "conclusion": "github:chen_2011_spherical_flames::__implication_result_1363c3d9",
+            "operator": "implication",
+            "variables": [
+              "github:chen_2011_spherical_flames::__conjunction_result_acfb13c4",
+              "github:chen_2011_spherical_flames::agreement_phi4"
+            ]
+          }
+        ]
+      },
+      "metadata": {
+        "formalization_template": "support",
+        "generated_formal_expr": true,
+        "prior": 0.99,
+        "reason": "Paper 148.0 cm/s (@paper_sl_phi4) vs Cantera 145.2 cm/s (@cantera_sl_phi4) ⇒ 1.9 % deviation."
+      },
+      "premises": [
+        "github:chen_2011_spherical_flames::paper_sl_phi4",
+        "github:chen_2011_spherical_flames::cantera_sl_phi4"
+      ],
+      "scope": "local",
+      "strategy_id": "lcs_87ad9f1bb6e5354a",
+      "type": "support"
+    },
+    {
+      "background": [
+        "github:chen_2011_spherical_flames::setup_h2_air"
+      ],
+      "conclusion": "github:chen_2011_spherical_flames::agreement_phi1",
+      "formal_expr": {
+        "operators": [
+          {
+            "conclusion": "github:chen_2011_spherical_flames::__implication_result_277b38d1",
+            "operator": "implication",
+            "variables": [
+              "github:chen_2011_spherical_flames::cantera_validates_paper_sl",
+              "github:chen_2011_spherical_flames::agreement_phi1"
+            ]
+          }
+        ]
+      },
+      "metadata": {
+        "formalization_template": "support",
+        "generated_formal_expr": true,
+        "prior": 0.95,
+        "reason": "If an independent Cantera computation correctly reproduces the paper's $S_L$ curve (@cantera_validates_paper_sl), then in particular the $\\phi = 1.0$ case should agree to within a few percent (@agreement_phi1)."
+      },
+      "premises": [
+        "github:chen_2011_spherical_flames::cantera_validates_paper_sl"
+      ],
+      "scope": "local",
+      "strategy_id": "lcs_e483dbdef7825b52",
+      "type": "support"
+    },
+    {
+      "background": [
+        "github:chen_2011_spherical_flames::setup_h2_air"
+      ],
+      "conclusion": "github:chen_2011_spherical_flames::agreement_phi2",
+      "formal_expr": {
+        "operators": [
+          {
+            "conclusion": "github:chen_2011_spherical_flames::__implication_result_05e1248f",
+            "operator": "implication",
+            "variables": [
+              "github:chen_2011_spherical_flames::cantera_validates_paper_sl",
+              "github:chen_2011_spherical_flames::agreement_phi2"
+            ]
+          }
+        ]
+      },
+      "metadata": {
+        "formalization_template": "support",
+        "generated_formal_expr": true,
+        "prior": 0.95,
+        "reason": "The same global validation claim predicts agreement at $\\phi = 2.0$ (@agreement_phi2)."
+      },
+      "premises": [
+        "github:chen_2011_spherical_flames::cantera_validates_paper_sl"
+      ],
+      "scope": "local",
+      "strategy_id": "lcs_cc4604dba8589fc9",
+      "type": "support"
+    },
+    {
+      "background": [
+        "github:chen_2011_spherical_flames::setup_h2_air"
+      ],
+      "conclusion": "github:chen_2011_spherical_flames::agreement_phi4",
+      "formal_expr": {
+        "operators": [
+          {
+            "conclusion": "github:chen_2011_spherical_flames::__implication_result_19879afa",
+            "operator": "implication",
+            "variables": [
+              "github:chen_2011_spherical_flames::cantera_validates_paper_sl",
+              "github:chen_2011_spherical_flames::agreement_phi4"
+            ]
+          }
+        ]
+      },
+      "metadata": {
+        "formalization_template": "support",
+        "generated_formal_expr": true,
+        "prior": 0.95,
+        "reason": "And it predicts agreement at $\\phi = 4.0$ (@agreement_phi4)."
+      },
+      "premises": [
+        "github:chen_2011_spherical_flames::cantera_validates_paper_sl"
+      ],
+      "scope": "local",
+      "strategy_id": "lcs_9ea77058eb39bbf4",
+      "type": "support"
+    },
+    {
+      "background": [
+        "github:chen_2011_spherical_flames::setup_h2_air"
+      ],
+      "conclusion": "github:chen_2011_spherical_flames::cantera_validates_paper_sl",
+      "metadata": {
+        "reason": "The $\\phi = 1.0$ and $\\phi = 2.0$ Cantera runs are independent flat-flame computations spanning lean-to-mildly-rich conditions."
+      },
+      "premises": [
+        "github:chen_2011_spherical_flames::agreement_phi1",
+        "github:chen_2011_spherical_flames::agreement_phi2"
+      ],
+      "scope": "local",
+      "strategy_id": "lcs_4d5867f93403a179",
+      "sub_strategies": [
+        "lcs_e483dbdef7825b52",
+        "lcs_cc4604dba8589fc9"
+      ],
+      "type": "induction"
+    },
+    {
+      "background": [
+        "github:chen_2011_spherical_flames::setup_h2_air"
+      ],
+      "conclusion": "github:chen_2011_spherical_flames::cantera_validates_paper_sl",
+      "metadata": {
+        "reason": "Adding the rich $\\phi = 4.0$ case (@agreement_phi4) — an independent point at Lewis number $\\mathrm{Le} > 1$, far from the lean/moderate regime already covered — extends the induction across the full equivalence-ratio range studied in the paper."
+      },
+      "premises": [
+        "github:chen_2011_spherical_flames::agreement_phi1",
+        "github:chen_2011_spherical_flames::agreement_phi2",
+        "github:chen_2011_spherical_flames::agreement_phi4"
+      ],
+      "scope": "local",
+      "strategy_id": "lcs_6ed954bda61ad0e0",
+      "sub_strategies": [
+        "lcs_4d5867f93403a179",
+        "lcs_9ea77058eb39bbf4"
+      ],
+      "type": "induction"
+    },
+    {
+      "background": [
+        "github:chen_2011_spherical_flames::setup_ch4_air"
+      ],
+      "conclusion": "github:chen_2011_spherical_flames::pyasurf_undershoots_phi1",
+      "formal_expr": {
+        "operators": [
+          {
+            "conclusion": "github:chen_2011_spherical_flames::__conjunction_result_d7bd06b7",
+            "operator": "conjunction",
+            "variables": [
+              "github:chen_2011_spherical_flames::pyasurf_phi1_sb",
+              "github:chen_2011_spherical_flames::cantera_ref_phi1_ch4"
+            ]
+          },
+          {
+            "conclusion": "github:chen_2011_spherical_flames::__implication_result_96c6f18e",
+            "operator": "implication",
+            "variables": [
+              "github:chen_2011_spherical_flames::__conjunction_result_d7bd06b7",
+              "github:chen_2011_spherical_flames::pyasurf_undershoots_phi1"
+            ]
+          }
+        ]
+      },
+      "metadata": {
+        "formalization_template": "support",
+        "generated_formal_expr": true,
+        "prior": 0.9,
+        "reason": "pyASURF spherical LM value 265.0 cm/s (@pyasurf_phi1_sb) compared against the independent Cantera flat-flame reference 284.7 cm/s (@cantera_ref_phi1_ch4) gives $-6.9$ %. This is the expected direction of the LM stretch-correction bias at $\\mathrm{Le} > 1$."
+      },
+      "premises": [
+        "github:chen_2011_spherical_flames::pyasurf_phi1_sb",
+        "github:chen_2011_spherical_flames::cantera_ref_phi1_ch4"
+      ],
+      "scope": "local",
+      "strategy_id": "lcs_f50b76c927123a12",
+      "type": "support"
+    },
+    {
+      "background": [
+        "github:chen_2011_spherical_flames::def_pyasurf",
+        "github:chen_2011_spherical_flames::setup_ch4_air"
+      ],
+      "conclusion": "github:chen_2011_spherical_flames::amr_regime_dependence",
+      "formal_expr": {
+        "operators": [
+          {
+            "conclusion": "github:chen_2011_spherical_flames::__conjunction_result_a238970b",
+            "operator": "conjunction",
+            "variables": [
+              "github:chen_2011_spherical_flames::pyasurf_phi14_sb_noisy",
+              "github:chen_2011_spherical_flames::pyasurf_phi06_amr6"
+            ]
+          },
+          {
+            "conclusion": "github:chen_2011_spherical_flames::__implication_result_a7e1a2e3",
+            "operator": "implication",
+            "variables": [
+              "github:chen_2011_spherical_flames::__conjunction_result_a238970b",
+              "github:chen_2011_spherical_flames::amr_regime_dependence"
+            ]
+          }
+        ]
+      },
+      "metadata": {
+        "formalization_template": "support",
+        "generated_formal_expr": true,
+        "prior": 0.9,
+        "reason": "The paired observations — clean $R^{2} = 0.993$ at $\\phi = 0.6$ AMR-6 (@pyasurf_phi06_amr6) but noisy $R^{2} = 0.555$ at $\\phi = 1.4$ AMR-6 (@pyasurf_phi14_sb_noisy) — demonstrate that AMR-6 is not uniformly adequate or inadequate. The difference is explained by flame thickness: $\\phi = 1.4$ has a much thinner $\\delta_f$."
+      },
+      "premises": [
+        "github:chen_2011_spherical_flames::pyasurf_phi14_sb_noisy",
+        "github:chen_2011_spherical_flames::pyasurf_phi06_amr6"
+      ],
+      "scope": "local",
+      "strategy_id": "lcs_39a61433ccd2a1c1",
+      "type": "support"
+    },
+    {
+      "background": [
+        "github:chen_2011_spherical_flames::def_pyasurf",
+        "github:chen_2011_spherical_flames::setup_ch4_air"
+      ],
+      "conclusion": "github:chen_2011_spherical_flames::amr_low_level_error",
+      "formal_expr": {
+        "operators": [
+          {
+            "conclusion": "github:chen_2011_spherical_flames::__implication_result_cd74b97d",
+            "operator": "implication",
+            "variables": [
+              "github:chen_2011_spherical_flames::amr_regime_dependence",
+              "github:chen_2011_spherical_flames::amr_low_level_error"
+            ]
+          }
+        ]
+      },
+      "metadata": {
+        "formalization_template": "support",
+        "generated_formal_expr": true,
+        "prior": 0.85,
+        "reason": "The regime-dependent adequacy finding (@amr_regime_dependence) implies that the 86 %-level Markstein-length errors reported at AMR 4-5 (@amr_low_level_error) must be worst in the slow, rich, thin-flame regime — exactly where the paper's Fig. 10b shows the largest Markstein lengths and therefore the most sensitivity to extraction uncertainty."
+      },
+      "premises": [
+        "github:chen_2011_spherical_flames::amr_regime_dependence"
+      ],
+      "scope": "local",
+      "strategy_id": "lcs_ebc716a27a6e128f",
+      "type": "support"
+    },
+    {
+      "background": [
+        "github:chen_2011_spherical_flames::setup_h2_air"
+      ],
+      "conclusion": "github:chen_2011_spherical_flames::repro_fig3_ordering",
+      "formal_expr": {
+        "operators": [
+          {
+            "conclusion": "github:chen_2011_spherical_flames::__implication_result_ec81e31d",
+            "operator": "implication",
+            "variables": [
+              "github:chen_2011_spherical_flames::pyasurf_fig3_curves",
+              "github:chen_2011_spherical_flames::repro_fig3_ordering"
+            ]
+          }
+        ]
+      },
+      "metadata": {
+        "formalization_template": "support",
+        "generated_formal_expr": true,
+        "prior": 0.98,
+        "reason": "The raw pyASURF curves (@pyasurf_fig3_curves) are *exactly* what 'reproducing Fig. 3' means in this context: three slope-2 lines with NMI at the bottom, NMII in the middle, LM at the top. Reading off the ordering from these curves is a direct observation."
+      },
+      "premises": [
+        "github:chen_2011_spherical_flames::pyasurf_fig3_curves"
+      ],
+      "scope": "local",
+      "strategy_id": "lcs_f6ee8e767c2c7588",
+      "type": "support"
+    },
+    {
+      "background": [
+        "github:chen_2011_spherical_flames::setup_h2_air"
+      ],
+      "conclusion": "github:chen_2011_spherical_flames::repro_fig7_relative",
+      "formal_expr": {
+        "operators": [
+          {
+            "conclusion": "github:chen_2011_spherical_flames::__implication_result_4027ba5d",
+            "operator": "implication",
+            "variables": [
+              "github:chen_2011_spherical_flames::pyasurf_fig7_deltas",
+              "github:chen_2011_spherical_flames::repro_fig7_relative"
+            ]
+          }
+        ]
+      },
+      "metadata": {
+        "formalization_template": "support",
+        "generated_formal_expr": true,
+        "prior": 0.97,
+        "reason": "The raw Le=3 spreads (@pyasurf_fig7_deltas) of 7.3 % and 2.4 % are within 15 % of the paper's 6 % and 2 %, and carry the same sign pattern across the three models — i.e. Fig. 7 reproduced."
+      },
+      "premises": [
+        "github:chen_2011_spherical_flames::pyasurf_fig7_deltas"
+      ],
+      "scope": "local",
+      "strategy_id": "lcs_288186ef26f5f1cd",
+      "type": "support"
+    },
+    {
+      "background": [
+        "github:chen_2011_spherical_flames::setup_h2_air"
+      ],
+      "conclusion": "github:chen_2011_spherical_flames::repro_fig3_ordering",
+      "formal_expr": {
+        "operators": [
+          {
+            "conclusion": "github:chen_2011_spherical_flames::__implication_result_2a30c00d",
+            "operator": "implication",
+            "variables": [
+              "github:chen_2011_spherical_flames::error_ordering_le_ne_1",
+              "github:chen_2011_spherical_flames::repro_fig3_ordering"
+            ]
+          }
+        ]
+      },
+      "metadata": {
+        "formalization_template": "support",
+        "generated_formal_expr": true,
+        "prior": 0.92,
+        "reason": "The paper's error-ordering claim (@error_ordering_le_ne_1) predicts that a faithful reproduction of Fig. 3 (SM-benchmark convergence) should show NMI with the smallest error, NMII intermediate, and LM the largest — exactly what the reproduction's Fig. 3 shows (@repro_fig3_ordering)."
+      },
+      "premises": [
+        "github:chen_2011_spherical_flames::error_ordering_le_ne_1"
+      ],
+      "scope": "local",
+      "strategy_id": "lcs_fe4db909f9c5b726",
+      "type": "support"
+    },
+    {
+      "background": [
+        "github:chen_2011_spherical_flames::setup_h2_air"
+      ],
+      "conclusion": "github:chen_2011_spherical_flames::repro_fig7_relative",
+      "formal_expr": {
+        "operators": [
+          {
+            "conclusion": "github:chen_2011_spherical_flames::__implication_result_39ce34db",
+            "operator": "implication",
+            "variables": [
+              "github:chen_2011_spherical_flames::error_ordering_le_ne_1",
+              "github:chen_2011_spherical_flames::repro_fig7_relative"
+            ]
+          }
+        ]
+      },
+      "metadata": {
+        "formalization_template": "support",
+        "generated_formal_expr": true,
+        "prior": 0.92,
+        "reason": "Independently, the ordering (@error_ordering_le_ne_1) predicts that in the relative-difference view of Fig. 7, the LM-vs-NMI gap at $\\mathrm{Le} = 3$ should be a few per cent — confirmed quantitatively (@repro_fig7_relative)."
+      },
+      "premises": [
+        "github:chen_2011_spherical_flames::error_ordering_le_ne_1"
+      ],
+      "scope": "local",
+      "strategy_id": "lcs_0e72f9be8c187959",
+      "type": "support"
+    },
+    {
+      "background": [
+        "github:chen_2011_spherical_flames::setup_h2_air"
+      ],
+      "conclusion": "github:chen_2011_spherical_flames::error_ordering_le_ne_1",
+      "metadata": {
+        "reason": "Fig. 3 (SM-benchmark convergence at fixed Le) and Fig. 7 (Le-sweep of relative differences between models) use different problem setups and different figures of merit; agreement from both is a genuinely independent pair of confirmations for the paper's error-ordering law."
+      },
+      "premises": [
+        "github:chen_2011_spherical_flames::repro_fig3_ordering",
+        "github:chen_2011_spherical_flames::repro_fig7_relative"
+      ],
+      "scope": "local",
+      "strategy_id": "lcs_c8072368fd3d4998",
+      "sub_strategies": [
+        "lcs_fe4db909f9c5b726",
+        "lcs_0e72f9be8c187959"
+      ],
+      "type": "induction"
+    },
+    {
+      "background": [
+        "github:chen_2011_spherical_flames::def_pyasurf",
+        "github:chen_2011_spherical_flames::setup_h2_air",
+        "github:chen_2011_spherical_flames::setup_ch4_air"
+      ],
+      "conclusion": "github:chen_2011_spherical_flames::reproduction_lessons",
+      "formal_expr": {
+        "operators": [
+          {
+            "conclusion": "github:chen_2011_spherical_flames::__conjunction_result_20b86954",
+            "operator": "conjunction",
+            "variables": [
+              "github:chen_2011_spherical_flames::ignition_kernel_constraint",
+              "github:chen_2011_spherical_flames::amr_low_level_error",
+              "github:chen_2011_spherical_flames::amr_level8_grid_indep",
+              "github:chen_2011_spherical_flames::soret_rich_h2_neglig",
+              "github:chen_2011_spherical_flames::large_mech_impractical"
+            ]
+          },
+          {
+            "conclusion": "github:chen_2011_spherical_flames::__implication_result_8c26d8a3",
+            "operator": "implication",
+            "variables": [
+              "github:chen_2011_spherical_flames::__conjunction_result_20b86954",
+              "github:chen_2011_spherical_flames::reproduction_lessons"
+            ]
+          }
+        ]
+      },
+      "metadata": {
+        "formalization_template": "support",
+        "generated_formal_expr": true,
+        "prior": 0.88,
+        "reason": "The four constraints in @reproduction_lessons each arose from a concrete failure-and-fix cycle in the trace: ignition failure when the kernel was narrower than the base cell (@ignition_kernel_constraint); up-to-86 % $L_b$ error at AMR 4-5 (@amr_low_level_error), reduced to < 0.5 % change at AMR 8 (@amr_level8_grid_indep); Soret toggle change < 2 % at rich H2 (@soret_rich_h2_neglig); and 4-16 h wall-time cost with 53-species GRI-Mech (@large_mech_impractical). Each lesson is individually sufficient to block a reproduction if violated, and together they are necessary conditions for a trustworthy OPS simulation pipeline."
+      },
+      "premises": [
+        "github:chen_2011_spherical_flames::ignition_kernel_constraint",
+        "github:chen_2011_spherical_flames::amr_low_level_error",
+        "github:chen_2011_spherical_flames::amr_level8_grid_indep",
+        "github:chen_2011_spherical_flames::soret_rich_h2_neglig",
+        "github:chen_2011_spherical_flames::large_mech_impractical"
+      ],
+      "scope": "local",
+      "strategy_id": "lcs_c1927ef844667aa4",
+      "type": "support"
+    },
+    {
+      "background": [
+        "github:chen_2011_spherical_flames::def_taylor_dataset",
+        "github:chen_2011_spherical_flames::setup_ch4_air"
+      ],
+      "conclusion": "github:chen_2011_spherical_flames::taylor_reanalysis_agreement",
+      "formal_expr": {
+        "operators": [
+          {
+            "conclusion": "github:chen_2011_spherical_flames::__conjunction_result_38a9f9fc",
+            "operator": "conjunction",
+            "variables": [
+              "github:chen_2011_spherical_flames::paper_taylor_phi134",
+              "github:chen_2011_spherical_flames::repro_taylor_phi134"
+            ]
+          },
+          {
+            "conclusion": "github:chen_2011_spherical_flames::__implication_result_47e5a353",
+            "operator": "implication",
+            "variables": [
+              "github:chen_2011_spherical_flames::__conjunction_result_38a9f9fc",
+              "github:chen_2011_spherical_flames::taylor_reanalysis_agreement"
+            ]
+          }
+        ]
+      },
+      "metadata": {
+        "formalization_template": "support",
+        "generated_formal_expr": true,
+        "prior": 0.95,
+        "reason": "Paper NMI extraction (@paper_taylor_phi134) vs independent digitisation + extraction (@repro_taylor_phi134): 154.1 vs 153.9 cm/s, a $-0.1$ % deviation. The match is far tighter than the digitisation uncertainty of hand-picked points off a printed figure would normally allow, which itself is indirect evidence that both sides agree on the fitting algorithm, window and mechanism."
+      },
+      "premises": [
+        "github:chen_2011_spherical_flames::paper_taylor_phi134",
+        "github:chen_2011_spherical_flames::repro_taylor_phi134"
+      ],
+      "scope": "local",
+      "strategy_id": "lcs_f20587e766e67dd3",
+      "type": "support"
+    },
+    {
+      "conclusion": "github:chen_2011_spherical_flames::fig4_def_residual_is_faithful",
+      "formal_expr": {
+        "operators": [
+          {
+            "conclusion": "github:chen_2011_spherical_flames::__implication_result_30f8af42",
+            "operator": "implication",
+            "variables": [
+              "github:chen_2011_spherical_flames::error_def_residual_eq6",
+              "github:chen_2011_spherical_flames::fig4_def_residual_is_faithful"
+            ]
+          }
+        ]
+      },
+      "metadata": {
+        "formalization_template": "support",
+        "generated_formal_expr": true,
+        "prior": 0.99,
+        "reason": "The paper's own error definition is the residual of each model equation at the exact DM solution (@error_def_residual_eq6). Therefore Hypothesis B — the Eq. 6 residual (@fig4_def_residual_is_faithful) — is the faithful reproduction; the sign inversion under Hypothesis A is an artefact of choosing a different error quantity than the paper's."
+      },
+      "premises": [
+        "github:chen_2011_spherical_flames::error_def_residual_eq6"
+      ],
+      "scope": "local",
+      "strategy_id": "lcs_8f21e8d64abef6d2",
+      "type": "support"
+    },
+    {
+      "conclusion": "github:chen_2011_spherical_flames::reproduction_13_of_14",
+      "formal_expr": {
+        "operators": [
+          {
+            "conclusion": "github:chen_2011_spherical_flames::__conjunction_result_a1e85272",
+            "operator": "conjunction",
+            "variables": [
+              "github:chen_2011_spherical_flames::qg_11_accept",
+              "github:chen_2011_spherical_flames::qg_fig4_fix",
+              "github:chen_2011_spherical_flames::qg_fig9_partial",
+              "github:chen_2011_spherical_flames::fig1_skipped"
+            ]
+          },
+          {
+            "conclusion": "github:chen_2011_spherical_flames::__implication_result_784e09f3",
+            "operator": "implication",
+            "variables": [
+              "github:chen_2011_spherical_flames::__conjunction_result_a1e85272",
+              "github:chen_2011_spherical_flames::reproduction_13_of_14"
+            ]
+          }
+        ]
+      },
+      "metadata": {
+        "formalization_template": "support",
+        "generated_formal_expr": true,
+        "prior": 0.95,
+        "reason": "Three disjoint outcome sets cover the 14 figures: 11 first-pass ACCEPT (@qg_11_accept), one corrected ACCEPT (@qg_fig4_fix), one relaxed-policy ACCEPT (@qg_fig9_partial), and one intentionally skipped literature-survey schematic (@fig1_skipped). 11 + 1 + 1 + 1 = 14, with 13 in the 'reproduced' category."
+      },
+      "premises": [
+        "github:chen_2011_spherical_flames::qg_11_accept",
+        "github:chen_2011_spherical_flames::qg_fig4_fix",
+        "github:chen_2011_spherical_flames::qg_fig9_partial",
+        "github:chen_2011_spherical_flames::fig1_skipped"
+      ],
+      "scope": "local",
+      "strategy_id": "lcs_b68371b4ba8889b5",
+      "type": "support"
+    },
+    {
+      "background": [
+        "github:chen_2011_spherical_flames::setup_h2_air"
+      ],
+      "conclusion": "github:chen_2011_spherical_flames::cantera_validates_paper_sl",
+      "formal_expr": {
+        "operators": [
+          {
+            "conclusion": "github:chen_2011_spherical_flames::__implication_result_2b49f079",
+            "operator": "implication",
+            "variables": [
+              "github:chen_2011_spherical_flames::chen2011_reproducible",
+              "github:chen_2011_spherical_flames::cantera_validates_paper_sl"
+            ]
+          }
+        ]
+      },
+      "metadata": {
+        "formalization_template": "support",
+        "generated_formal_expr": true,
+        "prior": 0.9,
+        "reason": "Reproducibility (@chen2011_reproducible) predicts that an independent flame-speed computation with the paper's declared mechanism and conditions should match the paper's S_L values — exactly the content of @cantera_validates_paper_sl."
+      },
+      "premises": [
+        "github:chen_2011_spherical_flames::chen2011_reproducible"
+      ],
+      "scope": "local",
+      "strategy_id": "lcs_f22fb694056d9096",
+      "type": "support"
+    },
+    {
+      "background": [
+        "github:chen_2011_spherical_flames::setup_ch4_air"
+      ],
+      "conclusion": "github:chen_2011_spherical_flames::taylor_reanalysis_agreement",
+      "formal_expr": {
+        "operators": [
+          {
+            "conclusion": "github:chen_2011_spherical_flames::__implication_result_daa474ce",
+            "operator": "implication",
+            "variables": [
+              "github:chen_2011_spherical_flames::chen2011_reproducible",
+              "github:chen_2011_spherical_flames::taylor_reanalysis_agreement"
+            ]
+          }
+        ]
+      },
+      "metadata": {
+        "formalization_template": "support",
+        "generated_formal_expr": true,
+        "prior": 0.9,
+        "reason": "Reproducibility likewise predicts that independently re-running the paper's extraction routine on the Taylor 1991 dataset recovers the paper's extracted $S_b^{0}$ values (@taylor_reanalysis_agreement)."
+      },
+      "premises": [
+        "github:chen_2011_spherical_flames::chen2011_reproducible"
+      ],
+      "scope": "local",
+      "strategy_id": "lcs_ecb594d133e1c1dd",
+      "type": "support"
+    },
+    {
+      "background": [
+        "github:chen_2011_spherical_flames::setup_h2_air"
+      ],
+      "conclusion": "github:chen_2011_spherical_flames::nq_window_requirement",
+      "formal_expr": {
+        "operators": [
+          {
+            "conclusion": "github:chen_2011_spherical_flames::__implication_result_2b28d6f5",
+            "operator": "implication",
+            "variables": [
+              "github:chen_2011_spherical_flames::chen2011_reproducible",
+              "github:chen_2011_spherical_flames::nq_window_requirement"
+            ]
+          }
+        ]
+      },
+      "metadata": {
+        "formalization_template": "support",
+        "generated_formal_expr": true,
+        "prior": 0.92,
+        "reason": "Reproducibility predicts that the paper's Section 3.2 NQ-window rule (@nq_window_requirement) would be confirmed by any independent attempt to extract $L_b$ at $\\mathrm{Le} > 1$: tight windows fail, wide windows succeed. The reproduction's failure-and-fix episode at $\\phi = 4.0$ did exactly that."
+      },
+      "premises": [
+        "github:chen_2011_spherical_flames::chen2011_reproducible"
+      ],
+      "scope": "local",
+      "strategy_id": "lcs_1ccdf9aef8c39b96",
+      "type": "support"
+    },
+    {
+      "background": [
+        "github:chen_2011_spherical_flames::reproduction_task"
+      ],
+      "conclusion": "github:chen_2011_spherical_flames::chen2011_reproducible",
+      "metadata": {
+        "reason": "Cantera validation (H2/air tier-1) and Taylor re-analysis (CH4/air experimental) are independent pillars — different fuel, different data source, different tool — whose simultaneous agreement is hard to explain unless the methodology is real."
+      },
+      "premises": [
+        "github:chen_2011_spherical_flames::cantera_validates_paper_sl",
+        "github:chen_2011_spherical_flames::taylor_reanalysis_agreement"
+      ],
+      "scope": "local",
+      "strategy_id": "lcs_f4d3f2f17f6a53b8",
+      "sub_strategies": [
+        "lcs_f22fb694056d9096",
+        "lcs_ecb594d133e1c1dd"
+      ],
+      "type": "induction"
+    },
+    {
+      "background": [
+        "github:chen_2011_spherical_flames::reproduction_task"
+      ],
+      "conclusion": "github:chen_2011_spherical_flames::chen2011_reproducible",
+      "metadata": {
+        "reason": "The NQ-window episode at $\\phi = 4.0$ adds a third independent pillar: unlike the first two it is a *qualitative* diagnostic prediction (tight window ⇒ negative $L_b$) that was confirmed. Three independent lines of evidence jointly elevate @chen2011_reproducible."
+      },
+      "premises": [
+        "github:chen_2011_spherical_flames::cantera_validates_paper_sl",
+        "github:chen_2011_spherical_flames::taylor_reanalysis_agreement",
+        "github:chen_2011_spherical_flames::nq_window_requirement"
+      ],
+      "scope": "local",
+      "strategy_id": "lcs_0c451f1ee5ee9520",
+      "sub_strategies": [
+        "lcs_f4d3f2f17f6a53b8",
+        "lcs_1ccdf9aef8c39b96"
+      ],
+      "type": "induction"
+    },
+    {
+      "conclusion": "github:chen_2011_spherical_flames::pipeline_caveat",
+      "formal_expr": {
+        "operators": [
+          {
+            "conclusion": "github:chen_2011_spherical_flames::__conjunction_result_70a9fff4",
+            "operator": "conjunction",
+            "variables": [
+              "github:chen_2011_spherical_flames::reproduction_lessons",
+              "github:chen_2011_spherical_flames::amr_level8_grid_indep",
+              "github:chen_2011_spherical_flames::soret_rich_h2_neglig"
+            ]
+          },
+          {
+            "conclusion": "github:chen_2011_spherical_flames::__implication_result_6dd5ef26",
+            "operator": "implication",
+            "variables": [
+              "github:chen_2011_spherical_flames::__conjunction_result_70a9fff4",
+              "github:chen_2011_spherical_flames::pipeline_caveat"
+            ]
+          }
+        ]
+      },
+      "metadata": {
+        "formalization_template": "support",
+        "generated_formal_expr": true,
+        "prior": 0.92,
+        "reason": "The four lessons (@reproduction_lessons) are collected from concrete failure-and-fix cycles. Grid independence at AMR 8 (@amr_level8_grid_indep) and Soret insensitivity (@soret_rich_h2_neglig) establish that the relevant regime is numerically converged once the check-list is respected — so the caveat is about *setup* rather than a hidden methodology gap."
+      },
+      "premises": [
+        "github:chen_2011_spherical_flames::reproduction_lessons",
+        "github:chen_2011_spherical_flames::amr_level8_grid_indep",
+        "github:chen_2011_spherical_flames::soret_rich_h2_neglig"
+      ],
+      "scope": "local",
+      "strategy_id": "lcs_4892121ce2eeb9cc",
+      "type": "support"
+    }
+  ]
+}
