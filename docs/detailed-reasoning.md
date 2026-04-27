@@ -1,6 +1,6 @@
 # chen-2011-spherical-flames-gaia
 
-Add your description here
+Gaia knowledge package formalizing Chen (2011) 'Extraction of laminar flame speed and Markstein length from outwardly propagating spherical flames' (Combust. Flame 158, 291–300) together with the 2026-04-09 Bohrium reproduction trace (chen-2011-cnf-158).
 
 ## Overview
 
