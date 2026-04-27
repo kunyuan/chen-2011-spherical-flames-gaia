@@ -1,7 +1,7 @@
 [project]
 name = "chen-2011-spherical-flames-gaia"
 version = "0.1.0"
-description = "Add your description here"
+description = "Gaia knowledge package formalizing Chen (2011) 'Extraction of laminar flame speed and Markstein length from outwardly propagating spherical flames' (Combust. Flame 158, 291–300) together with the 2026-04-09 Bohrium reproduction trace (chen-2011-cnf-158)."
 readme = "README.md"
 authors = [
     { name = "kunchen", email = "chenkun0228@gmail.com" }
